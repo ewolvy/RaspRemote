@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RaspRemote</string>
+    <string name="main_button_air_conditioner">Aire acondicionado</string>
+    <string name="main_button_wireless_plugs">Interruptores</string>
+    <string name="main_button_settings">Opciones</string>
+</resources>
