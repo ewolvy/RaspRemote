@@ -4,4 +4,11 @@
     <string name="main_button_air_conditioner">Aire acondicionado</string>
     <string name="main_button_wireless_plugs">Interruptores</string>
     <string name="main_button_settings">Opciones</string>
+    <string name="about_title">Acerca de RaspRemote</string>
+    <string name="about_credits">El icono del calefactor ha sido creado por <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">Prettycons</a>,
+        el icono del aire acondicionado por <a href="https://www.flaticon.com/authors/surang" title="surang">Surang</a>
+        y el de la lámpara de techo por <a href="https://www.freepik.com/" title="Freepik">Freepik</a>,
+        todos ellos de <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
+        y tienen licencia <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></string>
+    <string name="about_description">Aplicación creada por eWolvy para controlar los sistemas automatizados en una Raspberry Pi como un aire acondicionado o enchufes inteligentes</string>
 </resources>

@@ -1,8 +1,13 @@
 package com.mooo.ewolvy.raspremote
 
+import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v7.app.AlertDialog
+import android.widget.TextView
+
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        prepareButtonListeners();
+        prepareButtonListeners()
     }
 
     private fun prepareButtonListeners(){
@@ -25,6 +30,10 @@ class MainActivity : AppCompatActivity() {
         button_settings.setOnClickListener {
             launchSettings()
         }
+
+        button_about.setOnClickListener {
+            showAbout()
+        }
     }
 
     private fun launchAirConditionerActivity(){
@@ -37,5 +46,25 @@ class MainActivity : AppCompatActivity() {
 
     private fun launchSettings(){
         TODO("Will launch the activity for settings")
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showAbout(){
+        // Inflate the about message contents
+        val messageView = layoutInflater.inflate(R.layout.layout_about, null, false)
+
+        // When linking text, force to always use default color. This works
+        // around a pressed color state bug.
+        val textView = messageView.findViewById(R.id.tv_about_credits) as TextView
+        val defaultColor = textView.textColors.defaultColor
+        textView.setTextColor(defaultColor)
+
+        val builder = AlertDialog.Builder(this)
+        builder.setIcon(R.mipmap.ic_launcher)
+        builder.setTitle(R.string.app_name)
+        builder.setView(messageView)
+        builder.setPositiveButton("Ok", null)
+        builder.create()
+        builder.show()
     }
 }
