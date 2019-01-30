@@ -5,6 +5,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.AlertDialog
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.widget.TextView
 
 
@@ -15,37 +18,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        prepareButtonListeners()
     }
 
-    private fun prepareButtonListeners(){
-        button_air_conditioner.setOnClickListener {
-            launchAirConditionerActivity()
-        }
-
-        button_wireless_plugs.setOnClickListener {
-            launchWirelessPlugs()
-        }
-
-        button_settings.setOnClickListener {
-            launchSettings()
-        }
-
-        button_about.setOnClickListener {
-            showAbout()
-        }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
     }
 
-    private fun launchAirConditionerActivity(){
-        TODO("Will launch the activity for air conditioner control")
-    }
-
-    private fun launchWirelessPlugs(){
-        TODO("Will launch the activity for wireless plugs")
-    }
-
-    private fun launchSettings(){
-        TODO("Will launch the activity for settings")
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_main_item_about -> showAbout()
+            R.id.menu_main_switch_air_conditioners,
+            R.id.menu_main_switch_heaters,
+            R.id.menu_main_switch_lamps -> toggleOption(item)
+            else -> return super.onOptionsItemSelected(item)
+        }
+        return true
     }
 
     @SuppressLint("InflateParams")
@@ -66,5 +54,9 @@ class MainActivity : AppCompatActivity() {
         builder.setPositiveButton("Ok", null)
         builder.create()
         builder.show()
+    }
+
+    private fun toggleOption(item: MenuItem){
+        item.isChecked = !item.isChecked
     }
 }

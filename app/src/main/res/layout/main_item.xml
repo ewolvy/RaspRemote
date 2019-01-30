@@ -17,7 +17,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/textview_settings_item_name"
+            android:id="@+id/textview_item_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -28,28 +28,28 @@
             android:maxLines="1"
             android:textColor="@color/colorPrimaryText"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/imageview_settings_item_icon"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_item_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Dormitorio" />
 
         <TextView
-            android:id="@+id/textview_settings_item_link"
+            android:id="@+id/textview_item_link"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:gravity="start"
-            android:paddingBottom="4dp"
-            android:maxLines="1"
             android:ellipsize="end"
-            app:layout_constraintEnd_toStartOf="@+id/imageview_settings_item_icon"
+            android:gravity="start"
+            android:maxLines="1"
+            android:paddingBottom="4dp"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_item_icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textview_settings_item_name"
+            app:layout_constraintTop_toBottomOf="@+id/textview_item_name"
             tools:text="https://ewolvy.mooo.com:1207/AAKaysun" />
 
         <ImageView
-            android:id="@+id/imageview_settings_item_icon"
+            android:id="@+id/imageview_item_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="center"

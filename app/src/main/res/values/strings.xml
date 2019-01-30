@@ -11,4 +11,7 @@
         and the ceiling-lamp icon is made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a>,
         all of them from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></string>
+    <string name="menu_main_show_air_conditioners">Show air conditioners</string>
+    <string name="menu_main_show_heaters">Show heaters</string>
+    <string name="menu_main_show_lamps">Show lamps</string>
 </resources>
