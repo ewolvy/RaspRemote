@@ -10,8 +10,37 @@
         the air-conditioner icon is made by <a href="https://www.flaticon.com/authors/surang" title="surang">Surang</a>
         and the ceiling-lamp icon is made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a>,
         all of them from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-        and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></string>
+        and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank" title="Creative Commons BY 3.0">CC 3.0 BY</a></string>
     <string name="menu_main_show_air_conditioners">Show air conditioners</string>
     <string name="menu_main_show_heaters">Show heaters</string>
     <string name="menu_main_show_lamps">Show lamps</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Real Remote settings</string>
+    <string name="settings_address_label">Server address</string>
+    <string name="settings_address_key" translatable="false">address</string>
+    <string name="settings_port_label">Server port</string>
+    <string name="settings_port_key" translatable="false">port</string>
+    <string name="settings_username_key" translatable="false">username</string>
+    <string name="settings_username_label">Username</string>
+    <string name="settings_password_key" translatable="false">password</string>
+    <string name="settings_password_label">Password</string>
+    <string name="settings_certificate_key" translatable="false">certificate</string>
+    <string name="settings_certificate_label">SSL certificate file</string>
+    <string name="settings_file_label">Certificate file</string>
+    <string name="settings_file_key" translatable="false">certificate</string>
+    <string name="settings_selected_file">"Selected file: "</string>
+    <string name="settings_name_label">Name</string>
+    <string name="settings_type_label">Type</string>
+    <string name="settings_alias_label">Alias</string>
+    <string name="settings_certificate_button">Choose file…</string>
+    <string name="settings_editAA">Edit air conditioner</string>
+    <string-array name="settings_array_types">
+        <item>AC - Kaysun</item>
+        <item>AC - ProKlima</item>
+        <item>Heater</item>
+        <item>Lamp</item>
+    </string-array>
+    <string name="transition_name" translatable="false">transition_name</string>
+
 </resources>

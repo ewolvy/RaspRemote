@@ -5,21 +5,17 @@
         android:id="@+id/menu_main_switch_air_conditioners"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/menu_main_show_air_conditioners"
-        app:actionLayout="@layout/switch_item"
-        app:showAsAction="never" />
+        android:title="@string/menu_main_show_air_conditioners" />
     <item
         android:id="@+id/menu_main_switch_heaters"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/menu_main_show_heaters"
-        app:actionLayout="@layout/switch_item" />
+        android:title="@string/menu_main_show_heaters" />
     <item
         android:id="@+id/menu_main_switch_lamps"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/menu_main_show_lamps"
-        app:actionLayout="@layout/switch_item" />
+        android:title="@string/menu_main_show_lamps" />
     <item
         android:id="@+id/menu_main_item_about"
         android:title="@string/about_title" />

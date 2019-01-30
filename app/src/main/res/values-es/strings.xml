@@ -11,4 +11,26 @@
     <string name="menu_main_show_air_conditioners">Mostrar aires acondicionados</string>
     <string name="menu_main_show_heaters">Mostrar estufas</string>
     <string name="menu_main_show_lamps">Mostrar lámparas</string>
+
+    <string name="settings_menu_item">Preferencias</string>
+    <string name="settings_title">Preferencias de Real Remote</string>
+    <string name="settings_address_label">Dirección del servidor</string>
+    <string name="settings_port_label">Puerto del servidor</string>
+    <string name="settings_username_label">Usuario</string>
+    <string name="settings_password_label">Contraseña</string>
+    <string name="settings_certificate_label">Archivo del certificado SSL</string>
+    <string name="settings_file_label">Archivo de certificado</string>
+    <string name="settings_selected_file">"Archivo seleccionado: "</string>
+    <string name="settings_name_label">Nombre</string>
+    <string name="settings_type_label">Tipo</string>
+    <string name="settings_alias_label">Alias</string>
+    <string name="settings_certificate_button">Elegir archivo…</string>
+    <string name="settings_editAA">Editar aire acondicionado</string>
+    <string-array name="settings_array_types">
+        <item>AA - Kaysun</item>
+        <item>AA - ProKlima</item>
+        <item>Estufa</item>
+        <item>Lámpara</item>
+    </string-array>
+
 </resources>

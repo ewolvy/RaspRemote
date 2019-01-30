@@ -3,10 +3,8 @@ package com.mooo.ewolvy.raspremote
 import android.annotation.SuppressLint
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_main.*
 import android.support.v7.app.AlertDialog
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
 
@@ -57,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun toggleOption(item: MenuItem){
+        //TODO Actually toggle the option
         item.isChecked = !item.isChecked
     }
 }
