@@ -3,6 +3,7 @@
     <string name="main_button_air_conditioner">Air conditioner</string>
     <string name="main_button_settings">Settings</string>
     <string name="main_button_wireless_plugs">Wireless plugs</string>
+    <string name="item_icon_description">Icon for the kind of remote</string>
     <string name="about_title">About RaspRemote</string>
     <string name="about_description">Application made by eWolvy to control a Raspberry Pi\'s automation systems like air conditioning and smart plugs</string>
     <string name="about_credits">The heater icon is made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">Prettycons</a>,
