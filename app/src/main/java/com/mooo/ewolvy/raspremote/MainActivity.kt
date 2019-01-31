@@ -8,18 +8,23 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
 
-
+const val MAIN_PREFERENCES = "MainActivityPreferences"
 
 class MainActivity : AppCompatActivity() {
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        if (menu != null) loadMenuPreferences(menu)
         return true
     }
 
@@ -34,9 +39,11 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    @SuppressLint("InflateParams")
+    @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog
     private fun showAbout(){
         // Inflate the about message contents
+        // Usually, the second parameter should not be null, but there are some exceptions,
+        // as when it is used on an AlertDialog.
         val messageView = layoutInflater.inflate(R.layout.layout_about, null, false)
 
         // When linking text, force to always use default color. This works
@@ -54,8 +61,23 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
+    private fun loadMenuPreferences(menu: Menu){
+        val preferences = getSharedPreferences(MAIN_PREFERENCES, 0)
+        menu.findItem(R.id.menu_main_switch_air_conditioners).isChecked = preferences.getBoolean(R.id.menu_main_switch_air_conditioners.toString(), true)
+        menu.findItem(R.id.menu_main_switch_heaters).isChecked = preferences.getBoolean(R.id.menu_main_switch_heaters.toString(), true)
+        menu.findItem(R.id.menu_main_switch_lamps).isChecked = preferences.getBoolean(R.id.menu_main_switch_lamps.toString(), true)
+    }
+
     private fun toggleOption(item: MenuItem){
-        //TODO Actually toggle the option
         item.isChecked = !item.isChecked
+        savePreference (item.itemId, item.isChecked)
+        //TODO Change the data displayed
+    }
+
+    private fun savePreference(itemId: Int, isChecked: Boolean){
+        val sharedPreferences = getSharedPreferences(MAIN_PREFERENCES, 0)
+        val preferencesEditor = sharedPreferences.edit()
+        preferencesEditor.putBoolean(itemId.toString(), isChecked)
+        preferencesEditor.apply()
     }
 }
