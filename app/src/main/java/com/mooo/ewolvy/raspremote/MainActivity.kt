@@ -1,12 +1,14 @@
 package com.mooo.ewolvy.raspremote
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import kotlinx.android.synthetic.main.activity_main.*
 
 const val MAIN_PREFERENCES = "MainActivityPreferences"
 
@@ -16,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setButtonListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -37,6 +41,14 @@ class MainActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun setButtonListeners(){
+        fab_main.setOnClickListener {
+            val intent = Intent(this@MainActivity, EditItemActivity::class.java)
+
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog
