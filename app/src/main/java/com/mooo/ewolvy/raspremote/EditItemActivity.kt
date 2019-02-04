@@ -13,7 +13,7 @@ import org.json.JSONObject
 const val REQUEST_CODE_BCD = 1
 const val MY_TIMEOUT = 5000L
 const val SERVER_PORT = 19103
-const val SERVICE_REQUESTED = "BROADCAST_REALREMOTE"
+const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
 const val EDIT_TAG = "EDIT_TAG"
 
 class EditItemActivity : AppCompatActivity() {
@@ -55,7 +55,7 @@ class EditItemActivity : AppCompatActivity() {
                     //TODO: Get the data from the intent and show it on the EditItemActivity
                     Snackbar.make(
                         edit_root_layout, // Parent view
-                        JSONObject(response).getJSONObject("META").getString("Description"), // Message to show
+                        JSONObject(response).getString("Description"), // Message to show
                         Snackbar.LENGTH_LONG // How long to display the message.
                     ).show()
                 } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
