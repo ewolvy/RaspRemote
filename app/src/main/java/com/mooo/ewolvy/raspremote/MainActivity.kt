@@ -14,7 +14,6 @@ const val MAIN_PREFERENCES = "MainActivityPreferences"
 
 class MainActivity : AppCompatActivity() {
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -46,7 +45,9 @@ class MainActivity : AppCompatActivity() {
     private fun setButtonListeners(){
         fab_main.setOnClickListener {
             val intent = Intent(this@MainActivity, EditItemActivity::class.java)
-
+            val extras = Bundle()
+            extras.putInt(EditItemActivity.EDIT_PURPOSE, EditItemActivity.EDIT_FOR_NEW)
+            intent.putExtras(extras)
             startActivity(intent)
         }
     }

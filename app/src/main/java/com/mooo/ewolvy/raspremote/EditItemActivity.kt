@@ -18,11 +18,28 @@ const val EDIT_TAG = "EDIT_TAG"
 
 class EditItemActivity : AppCompatActivity() {
 
+    companion object {
+        const val EDIT_FOR_NEW = 0
+        const val EDIT_FOR_EDIT = 1
+        const val EDIT_PURPOSE = "PURPOSE"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_item)
 
-        setButtonListeners()
+        val purpose = getPurpose(intent.extras)
+
+        if (purpose == EDIT_FOR_NEW) {
+            fab_edit.show()
+            setButtonListeners()
+        }else{
+            fab_edit.hide()
+        }
+    }
+
+    private fun getPurpose(extras: Bundle?): Int{
+        return extras?.getInt(EDIT_PURPOSE) ?: EDIT_FOR_NEW
     }
 
     private fun setButtonListeners(){
@@ -51,13 +68,12 @@ class EditItemActivity : AppCompatActivity() {
         when (requestCode){
             REQUEST_CODE_BCD ->
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    val response = data?.getStringExtra(BroadcastDiscoveryActivity.EXTRA_SERVER)
-                    //TODO: Get the data from the intent and show it on the EditItemActivity
-                    Snackbar.make(
-                        edit_root_layout, // Parent view
-                        JSONObject(response).getString("Description"), // Message to show
-                        Snackbar.LENGTH_LONG // How long to display the message.
-                    ).show()
+                    val jsonData = JSONObject(data?.getStringExtra(BroadcastDiscoveryActivity.EXTRA_SERVER))
+                    edit_name.setText(jsonData.getString("Name"))
+                    edit_type.setSelection(jsonData.getInt("Type"))
+                    edit_server.setText(jsonData.getString("Address"))
+                    edit_port.setText(jsonData.getString("Port"))
+                    edit_alias.setText(jsonData.getString("Alias"))
                 } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
                     val error = data?.getSerializableExtra(BroadcastDiscoveryActivity.EXTRA_ERROR_CODE) as FetchDataErrorStatus? ?: FetchDataErrorStatus.UNKNOWN_ERROR
                     Snackbar.make(
