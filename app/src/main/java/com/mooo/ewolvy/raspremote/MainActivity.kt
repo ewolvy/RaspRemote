@@ -8,17 +8,34 @@ import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val MAIN_PREFERENCES = "MainActivityPreferences"
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var deviceVM: DeviceVM
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setButtonListeners()
+
+        val recyclerView = findViewById<RecyclerView>(R.id.recview_main)
+        val adapter = DeviceListAdapter(this)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
+        deviceVM.allDevices.observe(this, Observer { devices ->
+            // Update the cached copy of the devices in the adapter.
+            devices?.let { adapter.setDevices(it) }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
