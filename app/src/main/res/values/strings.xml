@@ -38,8 +38,8 @@
     <string-array name="settings_array_types">
         <item>AC - Kaysun</item>
         <item>AC - ProKlima</item>
-        <item>Heater</item>
         <item>Lamp</item>
+        <item>Heater</item>
     </string-array>
     <string name="transition_name" translatable="false">transition_name</string>
     <string name="menu_edit_save">Save</string>
@@ -49,5 +49,12 @@
     <string name="dialog_save_message">Do you want to save the device?</string>
     <string name="dialog_confirm_title">Confirm</string>
     <string name="dialog_discard_message">Discard changes and exit?</string>
+    <string name="edit_error_empty_name">You must give a name to the device</string>
+    <string name="edit_error_empty_server">You must specify the server</string>
+    <string name="edit_error_invalid_port">The port number must be between 1 and 65535</string>
+    <string name="edit_error_empty_username">You must specify the username</string>
+    <string name="edit_error_empty_password">You must specify the password</string>
+    <string name="edit_error_empty_alias">You must specify the alias</string>
+    <string name="edit_error_empty_certificate">You must select the certificate file</string>
 
 </resources>

@@ -20,6 +20,8 @@ const val MY_TIMEOUT = 5000L
 const val SERVER_PORT = 19103
 const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
 const val EDIT_TAG = "EDIT_TAG"
+const val MAX_PORT = 65535
+const val MIN_PORT = 1
 
 class EditItemActivity : AppCompatActivity() {
 
@@ -59,40 +61,72 @@ class EditItemActivity : AppCompatActivity() {
     }
 
     private fun saveAndExit(){
-        // TODO: Confirm save data and return to main activity
-        val builder = AlertDialog.Builder(this@EditItemActivity)
-        with(builder) {
-            setTitle(R.string.dialog_confirm_title)
-            setMessage(R.string.dialog_save_message)
-            setPositiveButton(R.string.dialog_yes) {_, _ ->
-                // TODO: error check and handling
-                val device = Device(0,
-                    edit_name.text.toString(),
-                    edit_type.selectedItemPosition,
-                    edit_server.text.toString(),
-                    edit_port.text.toString().toInt(),
-                    edit_username.text.toString(),
-                    edit_password.text.toString(),
-                    edit_alias.text.toString(),
-                    "/cert.pem", // TODO: Using fake certificate until can get a file
-                    0,  // will manage the correct order on the calling activity when creating / updating the device on the database
-                    "")
-                val replyIntent = Intent()
-                replyIntent.putExtra(EXTRA_DEVICE, device)
-                setResult(Activity.RESULT_OK, replyIntent)
-                finish()
-            }
-            setNeutralButton(R.string.dialog_no) {_, _ ->
-                // TODO: close dialog and continue on activity
+        when {
+            edit_name.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_name,
+                Snackbar.LENGTH_LONG).show()
+            edit_server.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_server,
+                Snackbar.LENGTH_LONG).show()
+            edit_port.text.toString().toInt() !in MIN_PORT..MAX_PORT -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_invalid_port,
+                Snackbar.LENGTH_LONG).show()
+            edit_username.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_username,
+                Snackbar.LENGTH_LONG).show()
+            edit_password.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_password,
+                Snackbar.LENGTH_LONG).show()
+            edit_alias.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_alias,
+                Snackbar.LENGTH_LONG).show()
+/******************* NOT IMPLEMENTED YET - TODO: Remove when can select certificate file
+            edit_certificate_text.text.isEmpty() -> Snackbar.make(
+                edit_root_layout,
+                R.string.edit_error_empty_certificate,
+                Snackbar.LENGTH_LONG).show()
+***************************************************************************************/
+            // If there is no error, offer the user to save changes and exit
+            else -> {
+                val builder = AlertDialog.Builder(this@EditItemActivity)
+                with(builder) {
+                    setTitle(R.string.dialog_confirm_title)
+                    setMessage(R.string.dialog_save_message)
+                    setPositiveButton(R.string.dialog_yes) {_, _ ->
+                        val device = Device(0,
+                            edit_name.text.toString(),
+                            edit_type.selectedItemPosition,
+                            edit_server.text.toString(),
+                            edit_port.text.toString().toInt(),
+                            edit_username.text.toString(),
+                            edit_password.text.toString(),
+                            edit_alias.text.toString(),
+                            "/cert.pem", // TODO: Using fake certificate until can get a file
+                            0,  // will manage the correct order on the calling activity when creating / updating the device on the database
+                            "")
+                        val replyIntent = Intent()
+                        replyIntent.putExtra(EXTRA_DEVICE, device)
+                        setResult(Activity.RESULT_OK, replyIntent)
+                        finish()
+                    }
+                    setNeutralButton(R.string.dialog_no) {_, _ ->
+                        return@setNeutralButton
+                    }
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
             }
         }
 
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
     }
 
     private fun cancelAndExit(){
-        // TODO: Confirm exit without saving data and return to main activity
         val builder = AlertDialog.Builder(this@EditItemActivity)
         builder.setTitle(R.string.dialog_confirm_title)
         builder.setMessage(R.string.dialog_discard_message)
@@ -102,7 +136,7 @@ class EditItemActivity : AppCompatActivity() {
             finish()
         }
         builder.setNeutralButton(R.string.dialog_no) {_, _ ->
-            // TODO: close dialog and continue on activity
+            return@setNeutralButton
         }
         val dialog: AlertDialog = builder.create()
         dialog.show()

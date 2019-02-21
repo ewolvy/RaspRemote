@@ -29,8 +29,8 @@
     <string-array name="settings_array_types">
         <item>AA - Kaysun</item>
         <item>AA - ProKlima</item>
-        <item>Estufa</item>
         <item>Lámpara</item>
+        <item>Estufa</item>
     </string-array>
     <string name="menu_edit_save">Guardar</string>
     <string name="menu_edit_discard">Descartar</string>
@@ -39,5 +39,12 @@
     <string name="dialog_save_message">¿Quieres guardar el dispositivo?</string>
     <string name="dialog_confirm_title">Confirmar</string>
     <string name="dialog_discard_message">¿Descartar cambios y salir?</string>
+    <string name="edit_error_empty_name">Debes dar un nombre al dispositivo</string>
+    <string name="edit_error_empty_server">Debes especificar el servidor</string>
+    <string name="edit_error_invalid_port">El puerto debe estar entre 1 y 65535</string>
+    <string name="edit_error_empty_username">Debes especificar el nombre de usuario</string>
+    <string name="edit_error_empty_password">Debes especificar la contraseña</string>
+    <string name="edit_error_empty_alias">Debes especificar el alias</string>
+    <string name="edit_error_empty_certificate">Debes seleccionar el archivo de certificado</string>
 
 </resources>

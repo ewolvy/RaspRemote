@@ -49,11 +49,11 @@ abstract class DeviceRoomDB: RoomDatabase() {
         fun populateDatabase(deviceDao: DeviceDao) {
             deviceDao.deleteAll()
 
-            var device = Device (0, "Prueba", 0, "https://ewolvy.mooo.com", 1207, "juanjo", "m4ndr4k3", "AAKaysun", "/cert.pem", 0, "")
+            var device = Device (0, "Aire", 0, "https://ewolvy.mooo.com", 1207, "juanjo", "m4ndr4k3", "AAKaysun", "/cert.pem", 0, "")
             deviceDao.insert(device)
-            device = Device(0, "Prueba 2", 2, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Lamp", "/cert.pem", 1, "")
+            device = Device(0, "Lámpara", 2, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Lamp", "/cert.pem", 1, "")
             deviceDao.insert(device)
-            device = Device(0, "Prueba 3", 3, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Estufa", "/cert.pem", 2, "")
+            device = Device(0, "Estufa", 3, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Estufa", "/cert.pem", 2, "")
             deviceDao.insert(device)
         }
     }
