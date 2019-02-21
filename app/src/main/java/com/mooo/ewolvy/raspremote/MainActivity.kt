@@ -1,17 +1,20 @@
 package com.mooo.ewolvy.raspremote
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
 
 const val MAIN_PREFERENCES = "MainActivityPreferences"
@@ -65,7 +68,7 @@ class MainActivity : AppCompatActivity() {
             val extras = Bundle()
             extras.putInt(EditItemActivity.EDIT_PURPOSE, EditItemActivity.EDIT_FOR_NEW)
             intent.putExtras(extras)
-            startActivity(intent)
+            startActivityForResult(intent, EditItemActivity.EDIT_FOR_NEW)
         }
     }
 
@@ -109,5 +112,25 @@ class MainActivity : AppCompatActivity() {
         val preferencesEditor = sharedPreferences.edit()
         preferencesEditor.putBoolean(itemId.toString(), isChecked)
         preferencesEditor.apply()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            EditItemActivity.EDIT_FOR_NEW ->
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        Toast.makeText(this, "Recibido", Toast.LENGTH_LONG).show()
+                        val extras = data?.extras
+                        if (extras != null) {
+                            val device: Device = extras.getParcelable<Device>(EditItemActivity.EXTRA_DEVICE) ?: return
+                            device.position = deviceVM.allDevices.value?.size ?: 0
+                            deviceVM.insert(device)
+                        }
+                    }
+                    Activity.RESULT_CANCELED ->
+                        Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
+                }
+        }
     }
 }

@@ -32,5 +32,12 @@
         <item>Estufa</item>
         <item>Lámpara</item>
     </string-array>
+    <string name="menu_edit_save">Guardar</string>
+    <string name="menu_edit_discard">Descartar</string>
+    <string name="dialog_yes">Sí</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_save_message">¿Quieres guardar el dispositivo?</string>
+    <string name="dialog_confirm_title">Confirmar</string>
+    <string name="dialog_discard_message">¿Descartar cambios y salir?</string>
 
 </resources>

@@ -17,5 +17,5 @@ data class Device (
     val password: String,
     val alias: String,
     val certificateFile: String,
-    val position: Int,
+    var position: Int,
     val currentState: String) : Parcelable

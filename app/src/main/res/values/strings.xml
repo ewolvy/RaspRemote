@@ -42,5 +42,12 @@
         <item>Lamp</item>
     </string-array>
     <string name="transition_name" translatable="false">transition_name</string>
+    <string name="menu_edit_save">Save</string>
+    <string name="menu_edit_discard">Discard</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="dialog_save_message">Do you want to save the device?</string>
+    <string name="dialog_confirm_title">Confirm</string>
+    <string name="dialog_discard_message">Discard changes and exit?</string>
 
 </resources>
