@@ -10,24 +10,23 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 
 class DeviceListAdapter internal constructor(
-    context: Context
-) : RecyclerView.Adapter<DeviceListAdapter.WordViewHolder>() {
+    context: Context) : RecyclerView.Adapter<DeviceListAdapter.DeviceViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var devices = emptyList<Device>() // Cached copy of devices
 
-    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
         val itemView = inflater.inflate(R.layout.main_item, parent, false)
-        return WordViewHolder(itemView)
+        return DeviceViewHolder(itemView)
     }
 
-    override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
         val current = devices[position]
         holder.deviceNameItemView.text = current.name
         val linkText = "${current.server}:${current.port}/${current.alias}"

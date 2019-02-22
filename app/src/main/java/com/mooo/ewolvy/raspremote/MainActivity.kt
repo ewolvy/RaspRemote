@@ -13,9 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.main_item.*
 
 const val MAIN_PREFERENCES = "MainActivityPreferences"
 
@@ -27,18 +27,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setButtonListeners()
-
-        val recyclerView = findViewById<RecyclerView>(R.id.recview_main)
         val adapter = DeviceListAdapter(this)
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recview_main.adapter = adapter
+        recview_main.layoutManager = LinearLayoutManager(this)
 
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this, Observer { devices ->
             // Update the cached copy of the devices in the adapter.
             devices?.let { adapter.setDevices(it) }
         })
+
+        setupListeners()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    private fun setButtonListeners(){
+    private fun setupListeners(){
         fab_main.setOnClickListener {
             val intent = Intent(this@MainActivity, EditItemActivity::class.java)
             val extras = Bundle()
