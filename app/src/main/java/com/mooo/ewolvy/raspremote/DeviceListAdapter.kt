@@ -43,5 +43,9 @@ class DeviceListAdapter internal constructor(
         notifyDataSetChanged()
     }
 
+    fun getDeviceAt (position: Int): Device{
+        return devices[position]
+    }
+
     override fun getItemCount() = devices.size
 }

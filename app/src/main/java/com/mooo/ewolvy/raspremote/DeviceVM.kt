@@ -20,13 +20,25 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
     val allDevices: LiveData<List<Device>>
 
     init {
-        val wordsDao = DeviceRoomDB.getDatabase(application, scope).deviceDao()
-        repository = DeviceRepository(wordsDao)
+        val devicesDao = DeviceRoomDB.getDatabase(application, scope).deviceDao()
+        repository = DeviceRepository(devicesDao)
         allDevices = repository.allDevices
     }
 
     fun insert(device: Device) = scope.launch(Dispatchers.IO) {
         repository.insert(device)
+    }
+
+    fun delete(device: Device) = scope.launch(Dispatchers.IO) {
+        repository.delete(device)
+    }
+
+    fun move(fromPosition: Int, toPosition: Int){
+        val fromDevice = allDevices.value?.get(fromPosition)
+        if (fromDevice != null){
+            repository.delete(fromDevice)
+            repository.insertAt(fromDevice, toPosition)
+        }
     }
 
     override fun onCleared() {

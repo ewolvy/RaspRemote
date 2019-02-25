@@ -12,22 +12,24 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.main_item.*
 
 const val MAIN_PREFERENCES = "MainActivityPreferences"
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var deviceVM: DeviceVM
+    private lateinit var adapter: DeviceListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = DeviceListAdapter(this)
+        adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
         recview_main.layoutManager = LinearLayoutManager(this)
 
@@ -36,6 +38,24 @@ class MainActivity : AppCompatActivity() {
             // Update the cached copy of the devices in the adapter.
             devices?.let { adapter.setDevices(it) }
         })
+
+        val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
+            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+                override fun onMove(
+                    recyclerView: RecyclerView,
+                    viewHolder: RecyclerView.ViewHolder,
+                    target: RecyclerView.ViewHolder
+                ): Boolean {
+                    return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
+                }
+
+                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                    onDeviceSwiped(viewHolder.adapterPosition)
+                }
+        }
+        val touchHelper = ItemTouchHelper(touchHelperCallback)
+        touchHelper.attachToRecyclerView(recview_main)
 
         setupListeners()
     }
@@ -69,6 +89,15 @@ class MainActivity : AppCompatActivity() {
             intent.putExtras(extras)
             startActivityForResult(intent, EditItemActivity.EDIT_FOR_NEW)
         }
+    }
+
+    private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
+        deviceVM.move(fromPosition, toPosition)
+        return true
+    }
+
+    private fun onDeviceSwiped(position: Int){
+        deviceVM.delete(adapter.getDeviceAt(position))
     }
 
     @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog
@@ -122,7 +151,7 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Recibido", Toast.LENGTH_LONG).show()
                         val extras = data?.extras
                         if (extras != null) {
-                            val device: Device = extras.getParcelable<Device>(EditItemActivity.EXTRA_DEVICE) ?: return
+                            val device: Device = extras.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
                             device.position = deviceVM.allDevices.value?.size ?: 0
                             deviceVM.insert(device)
                         }
