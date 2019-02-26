@@ -1,6 +1,7 @@
 package com.mooo.ewolvy.raspremote
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.mooo.ewolvy.raspremote.database.Device
@@ -33,11 +34,15 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
         repository.delete(device)
     }
 
-    fun move(fromPosition: Int, toPosition: Int){
+    fun move(fromPosition: Int, toPosition: Int) = scope.launch(Dispatchers.IO) {
         val fromDevice = allDevices.value?.get(fromPosition)
-        if (fromDevice != null){
-            repository.delete(fromDevice)
-            repository.insertAt(fromDevice, toPosition)
+        val toDevice = allDevices.value?.get(toPosition)
+        if (fromDevice != null && toDevice != null){
+            fromDevice.position = toPosition
+            toDevice.position = fromPosition
+            repository.update (fromDevice)
+            repository.update (toDevice)
+            Log.d("*DEVICE VIEW MODEL*", "Database updated")
         }
     }
 

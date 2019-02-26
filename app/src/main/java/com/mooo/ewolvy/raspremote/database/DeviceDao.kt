@@ -1,10 +1,7 @@
 package com.mooo.ewolvy.raspremote.database
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface DeviceDao {
@@ -16,6 +13,9 @@ interface DeviceDao {
 
     @Delete
     fun delete(device: Device)
+
+    @Update
+    fun update(device: Device)
 
     @Query("DELETE FROM device_table")
     fun deleteAll()

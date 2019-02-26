@@ -1,6 +1,7 @@
 package com.mooo.ewolvy.raspremote
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
+import java.util.*
 
 class DeviceListAdapter internal constructor(
     context: Context) : RecyclerView.Adapter<DeviceListAdapter.DeviceViewHolder>() {
@@ -18,6 +20,7 @@ class DeviceListAdapter internal constructor(
     inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
+        val devicePositionTextView: TextView = itemView.findViewById(R.id.textview_item_position)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
     }
 
@@ -31,6 +34,7 @@ class DeviceListAdapter internal constructor(
         holder.deviceNameItemView.text = current.name
         val linkText = "${current.server}:${current.port}/${current.alias}"
         holder.deviceLinkItemView.text = linkText
+        holder.devicePositionTextView.text = current.position.toString()
         holder.deviceIconItemView.setImageResource(when (current.type){
             0, 1 -> R.drawable.ic_air_conditioning
             2 -> R.drawable.ic_ceiling_lamp
@@ -39,8 +43,20 @@ class DeviceListAdapter internal constructor(
     }
 
     internal fun setDevices(devices: List<Device>) {
-        this.devices = devices
-        notifyDataSetChanged()
+        if (this.devices != devices) {
+            this.devices = devices
+            notifyDataSetChanged()
+            Log.d("*DEVICE LIST ADAPTER*", "Devices changed")
+        } else {
+            Log.d("*DEVICE LIST ADAPTER*", "Devices NOT changed")
+        }
+    }
+
+    fun move (fromPosition: Int, toPosition: Int){
+        devices[fromPosition].position = toPosition
+        devices[toPosition].position = fromPosition
+        Collections.swap(devices, fromPosition, toPosition)
+        notifyItemMoved(fromPosition, toPosition)
     }
 
     fun getDeviceAt (position: Int): Device{

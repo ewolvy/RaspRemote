@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var deviceVM: DeviceVM
     private lateinit var adapter: DeviceListAdapter
+    private val observer = Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}}
+    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,25 +36,27 @@ class MainActivity : AppCompatActivity() {
         recview_main.layoutManager = LinearLayoutManager(this)
 
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
-        deviceVM.allDevices.observe(this, Observer { devices ->
-            // Update the cached copy of the devices in the adapter.
-            devices?.let { adapter.setDevices(it) }
-        })
+        deviceVM.allDevices.observe(this, observer)
 
         val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-                override fun onMove(
-                    recyclerView: RecyclerView,
-                    viewHolder: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
-                }
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
+            }
 
-                override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                    onDeviceSwiped(viewHolder.adapterPosition)
-                }
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
+                deviceVM.allDevices.observe(context, observer)
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                onDeviceSwiped(viewHolder.adapterPosition)
+            }
         }
         val touchHelper = ItemTouchHelper(touchHelperCallback)
         touchHelper.attachToRecyclerView(recview_main)
@@ -92,6 +96,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
+        deviceVM.allDevices.removeObserver(observer)
+        adapter.move(fromPosition, toPosition)
         deviceVM.move(fromPosition, toPosition)
         return true
     }
