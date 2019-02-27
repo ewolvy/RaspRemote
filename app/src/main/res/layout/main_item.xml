@@ -28,7 +28,7 @@
             android:maxLines="1"
             android:textColor="@color/colorPrimaryText"
             android:textSize="24sp"
-            app:layout_constraintEnd_toStartOf="@+id/textview_item_position"
+            app:layout_constraintEnd_toStartOf="@+id/imageview_item_icon"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Dormitorio" />
@@ -62,14 +62,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@drawable/ic_air_conditioning" />
 
-        <TextView
-            android:id="@+id/textview_item_position"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintEnd_toStartOf="@+id/imageview_item_icon"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

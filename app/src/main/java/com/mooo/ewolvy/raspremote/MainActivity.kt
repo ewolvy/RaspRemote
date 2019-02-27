@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.TextView
@@ -24,8 +25,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var deviceVM: DeviceVM
     private lateinit var adapter: DeviceListAdapter
-    private val observer = Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}}
-    private val context = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +35,8 @@ class MainActivity : AppCompatActivity() {
         recview_main.layoutManager = LinearLayoutManager(this)
 
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
-        deviceVM.allDevices.observe(this, observer)
+        deviceVM.allDevices.observe(this,
+            Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
 
         val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -47,11 +47,6 @@ class MainActivity : AppCompatActivity() {
                 target: RecyclerView.ViewHolder
             ): Boolean {
                 return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
-            }
-
-            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-                super.clearView(recyclerView, viewHolder)
-                deviceVM.allDevices.observe(context, observer)
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -80,6 +75,7 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_main_switch_air_conditioners,
             R.id.menu_main_switch_heaters,
             R.id.menu_main_switch_lamps -> toggleOption(item)
+            R.id.menu_main_add_fake_data -> addFakeData()
             else -> return super.onOptionsItemSelected(item)
         }
         return true
@@ -96,9 +92,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
-        deviceVM.allDevices.removeObserver(observer)
-        adapter.move(fromPosition, toPosition)
-        deviceVM.move(fromPosition, toPosition)
+        adapter.moveDevices(fromPosition, toPosition)
+        deviceVM.updateDevice(adapter.getDeviceAt(fromPosition))
+        deviceVM.updateDevice(adapter.getDeviceAt(toPosition))
         return true
     }
 
@@ -166,5 +162,20 @@ class MainActivity : AppCompatActivity() {
                         Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
                 }
         }
+    }
+
+    private fun addFakeData(){
+        var device = Device (0, "Aire", 0, "https://ewolvy.mooo.com", 1207, "juanjo", "m4ndr4k3", "AAKaysun", "/cert.pem", 0, "")
+        device.position = deviceVM.allDevices.value?.size ?: 0
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
+        deviceVM.insert(device)
+        device = Device(0, "Lámpara", 2, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Lamp", "/cert.pem", 1, "")
+        device.position = (deviceVM.allDevices.value?.size ?: 0) + 1
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
+        deviceVM.insert(device)
+        device = Device(0, "Estufa", 3, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Estufa", "/cert.pem", 2, "")
+        device.position = (deviceVM.allDevices.value?.size ?: 0) + 2
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
+        deviceVM.insert(device)
     }
 }

@@ -56,5 +56,6 @@
     <string name="edit_error_empty_password">You must specify the password</string>
     <string name="edit_error_empty_alias">You must specify the alias</string>
     <string name="edit_error_empty_certificate">You must select the certificate file</string>
+    <string name="menu_main_add_fake_data">Add fake data</string>
 
 </resources>

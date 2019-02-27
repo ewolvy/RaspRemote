@@ -17,6 +17,9 @@
         android:checked="true"
         android:title="@string/menu_main_show_lamps" />
     <item
+        android:id="@+id/menu_main_add_fake_data"
+        android:title="@string/menu_main_add_fake_data" />
+    <item
         android:id="@+id/menu_main_item_about"
         android:title="@string/about_title" />
 </menu>
