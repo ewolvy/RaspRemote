@@ -8,14 +8,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(tableName = "device_table")
 data class Device (
-    @PrimaryKey(autoGenerate = true) val _id: Int,
-    val name: String,
-    val type: Int,
-    val server: String,
-    val port: Int,
-    val username: String,
-    val password: String,
-    val alias: String,
-    val certificateFile: String,
-    var position: Int,
-    val currentState: String) : Parcelable
+    @PrimaryKey(autoGenerate = true) val _id: Int = 0,
+    val name: String = "",
+    val type: Int = 0,
+    val server: String = "",
+    val port: Int = 0,
+    val username: String = "",
+    val password: String = "",
+    val alias: String = "",
+    val certificateFile: String = "",
+    var position: Int = 0,
+    val currentState: String = "") : Parcelable

@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
-        recview_main.layoutManager = LinearLayoutManager(this)
+        recview_main.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
 
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this,
@@ -159,7 +159,21 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                     Activity.RESULT_CANCELED ->
-                        Toast.makeText(this, "Cancelado", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this, "Cancelado nuevo", Toast.LENGTH_LONG).show()
+                }
+            EditItemActivity.EDIT_FOR_EDIT ->
+                when (resultCode) {
+                    Activity.RESULT_OK -> {
+                        Toast.makeText(this, "Recibido", Toast.LENGTH_LONG).show()
+                        val extras = data?.extras
+                        if (extras != null) {
+                            val device: Device = extras.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
+                            deviceVM.updateDevice(device)
+                        }
+                    }
+                    Activity.RESULT_CANCELED -> {
+                        Toast.makeText(this, "Cancelada edición", Toast.LENGTH_LONG).show()
+                    }
                 }
         }
     }

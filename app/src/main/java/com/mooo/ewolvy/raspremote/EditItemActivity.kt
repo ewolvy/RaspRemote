@@ -33,6 +33,7 @@ class EditItemActivity : AppCompatActivity() {
     }
 
     private val purpose: Int by lazy {getPurpose(intent.extras)}
+    private val device: Device by lazy {getDevice(intent.extras)}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class EditItemActivity : AppCompatActivity() {
             setButtonListeners()
         }else{
             fab_edit.hide()
+            populateFields()
         }
     }
 
@@ -99,7 +101,7 @@ class EditItemActivity : AppCompatActivity() {
                     setTitle(R.string.dialog_confirm_title)
                     setMessage(R.string.dialog_save_message)
                     setPositiveButton(R.string.dialog_yes) {_, _ ->
-                        val device = Device(0,
+                        val returnDevice = Device(device._id,
                             edit_name.text.toString(),
                             edit_type.selectedItemPosition,
                             edit_server.text.toString(),
@@ -108,10 +110,10 @@ class EditItemActivity : AppCompatActivity() {
                             edit_password.text.toString(),
                             edit_alias.text.toString(),
                             "/cert.pem", // TODO: Using fake certificate until can get a file
-                            0,  // will manage the correct order on the calling activity when creating / updating the device on the database
-                            "")
+                            device.position,  // will manage the correct order on the calling activity when creating / updating the device on the database
+                            device.currentState)
                         val replyIntent = Intent()
-                        replyIntent.putExtra(EXTRA_DEVICE, device)
+                        replyIntent.putExtra(EXTRA_DEVICE, returnDevice)
                         setResult(Activity.RESULT_OK, replyIntent)
                         finish()
                     }
@@ -144,6 +146,21 @@ class EditItemActivity : AppCompatActivity() {
 
     private fun getPurpose(extras: Bundle?): Int{
         return extras?.getInt(EDIT_PURPOSE) ?: EDIT_FOR_NEW
+    }
+
+    private fun getDevice(extras: Bundle?): Device{
+        return extras?.getParcelable(EXTRA_DEVICE) ?: Device()
+    }
+
+    private fun populateFields(){
+        edit_name.setText(device.name)
+        edit_type.setSelection(device.type)
+        edit_server.setText(device.server)
+        edit_port.setText(device.port.toString())
+        edit_username.setText(device.username)
+        edit_password.setText(device.password)
+        edit_alias.setText(device.alias)
+        edit_certificate_text.setText(device.certificateFile)
     }
 
     private fun setButtonListeners(){
