@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
-        recview_main.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        recview_main.layoutManager = LinearLayoutManager(this)
 
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this,

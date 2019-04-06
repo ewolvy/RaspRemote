@@ -160,7 +160,7 @@ class EditItemActivity : AppCompatActivity() {
         edit_username.setText(device.username)
         edit_password.setText(device.password)
         edit_alias.setText(device.alias)
-        edit_certificate_text.setText(device.certificateFile)
+        edit_certificate_text.text = device.certificateFile
     }
 
     private fun setButtonListeners(){

@@ -11,6 +11,7 @@ import kotlinx.coroutines.android.Main
 import kotlin.coroutines.CoroutineContext
 
 class DeviceVM (application: Application) : AndroidViewModel(application) {
+
     private var parentJob = Job()
     private val coroutineContext: CoroutineContext
     get() = parentJob + Dispatchers.Main
@@ -41,4 +42,5 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
         super.onCleared()
         parentJob.cancel()
     }
+
 }
