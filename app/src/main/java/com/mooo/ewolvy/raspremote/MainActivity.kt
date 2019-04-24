@@ -148,7 +148,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun addFakeData(){
+    private fun addFakeData(){ //TODO: Remove this function before final version
         var device = Device (
             0,
             "Aire",

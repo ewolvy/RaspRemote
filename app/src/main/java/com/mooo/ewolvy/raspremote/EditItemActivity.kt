@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_edit_item.*
 import org.json.JSONObject
 
 const val REQUEST_CODE_BCD = 3
+const val REQUEST_CODE_FC = 4
 const val MY_TIMEOUT = 5000L
 const val SERVER_PORT = 19103
 const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
@@ -39,9 +40,9 @@ class EditItemActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_item)
 
+        setButtonListeners()
         if (purpose == EDIT_FOR_NEW) {
             fab_edit.show()
-            setButtonListeners()
         }else{
             fab_edit.hide()
             populateFields()
@@ -88,12 +89,10 @@ class EditItemActivity : AppCompatActivity() {
                 edit_root_layout,
                 R.string.edit_error_empty_alias,
                 Snackbar.LENGTH_LONG).show()
-/******************* NOT IMPLEMENTED YET - TODO: Remove when can select certificate file
             edit_certificate_text.text.isEmpty() -> Snackbar.make(
                 edit_root_layout,
                 R.string.edit_error_empty_certificate,
                 Snackbar.LENGTH_LONG).show()
-***************************************************************************************/
             // If there is no error, offer the user to save changes and exit
             else -> {
                 val builder = AlertDialog.Builder(this@EditItemActivity)
@@ -109,7 +108,7 @@ class EditItemActivity : AppCompatActivity() {
                             edit_username.text.toString(),
                             edit_password.text.toString(),
                             edit_alias.text.toString(),
-                            "/cert.pem", // TODO: Using fake certificate until can get a file
+                            edit_certificate_text.text.toString(),
                             device.position,  // will manage the correct order on the calling activity when creating / updating the device on the database
                             device.currentState)
                         val replyIntent = Intent()
@@ -164,11 +163,21 @@ class EditItemActivity : AppCompatActivity() {
     }
 
     private fun setButtonListeners(){
-        // TODO: Set choose file button listener
+        edit_certificate_button.setOnClickListener{
+            startFileChooser()
+        }
 
         fab_edit.setOnClickListener {
             startBroadcastDiscoveryActivity()
         }
+    }
+
+    private fun startFileChooser(){
+        val intent = Intent()
+            .setType("*/*")
+            .setAction(Intent.ACTION_OPEN_DOCUMENT)
+
+        startActivityForResult(Intent.createChooser(intent, "Select a file"), REQUEST_CODE_FC)
     }
 
     private fun startBroadcastDiscoveryActivity(){
@@ -202,6 +211,11 @@ class EditItemActivity : AppCompatActivity() {
                         error.toString(),
                         Snackbar.LENGTH_LONG
                     ).show()
+                }
+            REQUEST_CODE_FC ->
+                if (resultCode == Activity.RESULT_OK) {
+                    val certificateUri = data?.data
+                    edit_certificate_text.text = certificateUri.toString()
                 }
             else -> Log.d(EDIT_TAG, "Unexpected activity returned some result!!!")
         }
