@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
 
-const val MAIN_PREFERENCES = "MainActivityPreferences"
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var deviceVM: DeviceVM
@@ -64,17 +62,9 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        if (menu != null) loadMenuPreferences(menu)
-        return true
-    }
-
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
             R.id.menu_main_item_about -> showAbout()
-            R.id.menu_main_switch_air_conditioners,
-            R.id.menu_main_switch_heaters,
-            R.id.menu_main_switch_lamps -> toggleOption(item)
             R.id.menu_main_add_fake_data -> addFakeData()
             else -> return super.onOptionsItemSelected(item)
         }
@@ -124,26 +114,6 @@ class MainActivity : AppCompatActivity() {
         builder.show()
     }
 
-    private fun loadMenuPreferences(menu: Menu){
-        val preferences = getSharedPreferences(MAIN_PREFERENCES, 0)
-        menu.findItem(R.id.menu_main_switch_air_conditioners).isChecked = preferences.getBoolean(R.id.menu_main_switch_air_conditioners.toString(), true)
-        menu.findItem(R.id.menu_main_switch_heaters).isChecked = preferences.getBoolean(R.id.menu_main_switch_heaters.toString(), true)
-        menu.findItem(R.id.menu_main_switch_lamps).isChecked = preferences.getBoolean(R.id.menu_main_switch_lamps.toString(), true)
-    }
-
-    private fun toggleOption(item: MenuItem){
-        item.isChecked = !item.isChecked
-        savePreference (item.itemId, item.isChecked)
-        //TODO Change the data displayed
-    }
-
-    private fun savePreference(itemId: Int, isChecked: Boolean){
-        val sharedPreferences = getSharedPreferences(MAIN_PREFERENCES, 0)
-        val preferencesEditor = sharedPreferences.edit()
-        preferencesEditor.putBoolean(itemId.toString(), isChecked)
-        preferencesEditor.apply()
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
@@ -179,17 +149,55 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addFakeData(){
-        var device = Device (0, "Aire", 0, "https://ewolvy.mooo.com", 1207, "juanjo", "m4ndr4k3", "AAKaysun", "/cert.pem", 0, "")
+        var device = Device (
+            0,
+            "Aire",
+            0,
+            "https://ewolvy.mooo.com",
+            1207,
+            "juanjo",
+            "m4ndr4k3",
+            "AAKaysun",
+            "/cert.pem",
+            0,
+            ""
+        )
         device.position = deviceVM.allDevices.value?.size ?: 0
-        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
         deviceVM.insert(device)
-        device = Device(0, "Lámpara", 2, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Lamp", "/cert.pem", 1, "")
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
+
+        device = Device(
+            0,
+            "Lámpara",
+            2,
+            "https://ewolvy.mooo.com",
+            2106,
+            "juanjo",
+            "m4ndr4k3",
+            "Lamp",
+            "/cert.pem",
+            1,
+            ""
+        )
         device.position = (deviceVM.allDevices.value?.size ?: 0) + 1
-        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
         deviceVM.insert(device)
-        device = Device(0, "Estufa", 3, "https://ewolvy.mooo.com", 2106, "juanjo", "m4ndr4k3", "Estufa", "/cert.pem", 2, "")
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
+
+        device = Device(
+            0,
+            "Estufa",
+            3,
+            "https://ewolvy.mooo.com",
+            2106,
+            "juanjo",
+            "m4ndr4k3",
+            "Estufa",
+            "/cert.pem",
+            2,
+            ""
+        )
         device.position = (deviceVM.allDevices.value?.size ?: 0) + 2
-        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
         deviceVM.insert(device)
+        Log.d("MAIN", "Insertado ${device.name} en posición: ${device.position}")
     }
 }

@@ -188,14 +188,14 @@ class EditItemActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode){
             REQUEST_CODE_BCD ->
-                if (resultCode == AppCompatActivity.RESULT_OK) {
+                if (resultCode == RESULT_OK) {
                     val jsonData = JSONObject(data?.getStringExtra(BroadcastDiscoveryActivity.EXTRA_SERVER))
                     edit_name.setText(jsonData.getString("Name"))
                     edit_type.setSelection(jsonData.getInt("Type"))
                     edit_server.setText(jsonData.getString("Address"))
                     edit_port.setText(jsonData.getString("Port"))
                     edit_alias.setText(jsonData.getString("Alias"))
-                } else if (resultCode == AppCompatActivity.RESULT_CANCELED) {
+                } else if (resultCode == RESULT_CANCELED) {
                     val error = data?.getSerializableExtra(BroadcastDiscoveryActivity.EXTRA_ERROR_CODE) as FetchDataErrorStatus? ?: FetchDataErrorStatus.UNKNOWN_ERROR
                     Snackbar.make(
                         edit_root_layout,

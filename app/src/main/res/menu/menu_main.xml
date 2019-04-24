@@ -2,21 +2,6 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_main_switch_air_conditioners"
-        android:checkable="true"
-        android:checked="true"
-        android:title="@string/menu_main_show_air_conditioners" />
-    <item
-        android:id="@+id/menu_main_switch_heaters"
-        android:checkable="true"
-        android:checked="true"
-        android:title="@string/menu_main_show_heaters" />
-    <item
-        android:id="@+id/menu_main_switch_lamps"
-        android:checkable="true"
-        android:checked="true"
-        android:title="@string/menu_main_show_lamps" />
-    <item
         android:id="@+id/menu_main_add_fake_data"
         android:title="@string/menu_main_add_fake_data" />
     <item
