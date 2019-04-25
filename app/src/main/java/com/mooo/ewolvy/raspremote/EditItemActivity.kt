@@ -2,6 +2,7 @@ package com.mooo.ewolvy.raspremote
 
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -35,6 +36,7 @@ class EditItemActivity : AppCompatActivity() {
 
     private val purpose: Int by lazy {getPurpose(intent.extras)}
     private val device: Device by lazy {getDevice(intent.extras)}
+    private var certificateUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +110,7 @@ class EditItemActivity : AppCompatActivity() {
                             edit_username.text.toString(),
                             edit_password.text.toString(),
                             edit_alias.text.toString(),
-                            edit_certificate_text.text.toString(),
+                            certificateUri?.path ?: device.certificateFile,
                             device.position,  // will manage the correct order on the calling activity when creating / updating the device on the database
                             device.currentState)
                         val replyIntent = Intent()
@@ -124,7 +126,6 @@ class EditItemActivity : AppCompatActivity() {
                 dialog.show()
             }
         }
-
     }
 
     private fun cancelAndExit(){
@@ -159,7 +160,7 @@ class EditItemActivity : AppCompatActivity() {
         edit_username.setText(device.username)
         edit_password.setText(device.password)
         edit_alias.setText(device.alias)
-        edit_certificate_text.text = device.certificateFile
+        edit_certificate_text.text = device.certificateFile.substring(device.certificateFile.lastIndexOf("/") + 1)
     }
 
     private fun setButtonListeners(){
@@ -176,6 +177,7 @@ class EditItemActivity : AppCompatActivity() {
         val intent = Intent()
             .setType("*/*")
             .setAction(Intent.ACTION_OPEN_DOCUMENT)
+            .addCategory(Intent.CATEGORY_OPENABLE)
 
         startActivityForResult(Intent.createChooser(intent, "Select a file"), REQUEST_CODE_FC)
     }
@@ -214,8 +216,11 @@ class EditItemActivity : AppCompatActivity() {
                 }
             REQUEST_CODE_FC ->
                 if (resultCode == Activity.RESULT_OK) {
-                    val certificateUri = data?.data
-                    edit_certificate_text.text = certificateUri.toString()
+                    certificateUri = data?.data
+                    if (certificateUri != null && certificateUri?.path != null) {
+                        val uriPath: String = certificateUri?.path as String
+                        edit_certificate_text.text = uriPath.substring(uriPath.lastIndexOf("/") + 1)
+                    }
                 }
             else -> Log.d(EDIT_TAG, "Unexpected activity returned some result!!!")
         }
