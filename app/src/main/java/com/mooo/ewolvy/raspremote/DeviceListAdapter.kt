@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
 import java.util.*
 
@@ -32,6 +34,7 @@ class DeviceListAdapter internal constructor(
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
         val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
+        val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
@@ -59,6 +62,11 @@ class DeviceListAdapter internal constructor(
             extras.putParcelable(EditItemActivity.EXTRA_DEVICE, current)
             intent.putExtras(extras)
             startActivityForResult(context as Activity, intent, EditItemActivity.EDIT_FOR_EDIT, null)
+        }
+
+        holder.deviceItemContainer.setOnClickListener{
+            Snackbar.make(it, "Prueba ${current.position}", Snackbar.LENGTH_LONG).show()
+            //TODO: launch activity depending on device type
         }
     }
 
