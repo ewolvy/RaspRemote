@@ -58,5 +58,6 @@
     <string name="edit_error_empty_certificate">You must select the certificate file</string>
     <string name="menu_main_add_fake_data">Add fake data</string>
     <string name="item_edit_description">Icon to edit the item</string>
+    <string name="dialog_ok">Ok</string>
 
 </resources>

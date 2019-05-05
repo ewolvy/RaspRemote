@@ -19,7 +19,7 @@ import org.json.JSONObject
 const val REQUEST_CODE_BCD = 3
 const val REQUEST_CODE_FC = 4
 const val MY_TIMEOUT = 5000L
-const val SERVER_PORT = 19103
+const val BCD_SERVER_PORT = 19103
 const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
 const val EDIT_TAG = "EDIT_TAG"
 const val MAX_PORT = 65535
@@ -186,7 +186,7 @@ class EditItemActivity : AppCompatActivity() {
         val intent = Intent(this@EditItemActivity, BroadcastDiscoveryActivity::class.java)
         val extras = Bundle()
         extras.putString(BroadcastDiscoveryActivity.EXTRA_SERVICE, SERVICE_REQUESTED)
-        extras.putInt(BroadcastDiscoveryActivity.EXTRA_PORT, SERVER_PORT)
+        extras.putInt(BroadcastDiscoveryActivity.EXTRA_PORT, BCD_SERVER_PORT)
         extras.putLong(BroadcastDiscoveryActivity.EXTRA_TIMEOUT, MY_TIMEOUT)
         extras.putLong(BroadcastDiscoveryActivity.EXTRA_RESEND_TIME, MY_TIMEOUT)
 

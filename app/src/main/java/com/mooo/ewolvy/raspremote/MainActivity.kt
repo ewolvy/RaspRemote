@@ -24,18 +24,73 @@ class MainActivity : AppCompatActivity() {
     private lateinit var deviceVM: DeviceVM
     private lateinit var adapter: DeviceListAdapter
 
+    // Override standard functions of the Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        recyclerViewSetup()
+        listenersSetup()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
+            R.id.menu_main_item_about -> showAbout()
+            R.id.menu_main_add_fake_data -> addFakeData()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            EditItemActivity.EDIT_FOR_NEW ->
+                when (resultCode) {
+                    Activity.RESULT_OK -> { // TODO: Change the text displayed
+                        data?.extras?.let {
+                            val device: Device = it.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
+                            device.position = deviceVM.allDevices.value?.size ?: 0
+                            deviceVM.insert(device)
+                            Toast.makeText(this, "Recibido nuevo", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    Activity.RESULT_CANCELED -> // TODO: Change the text displayed
+                        Toast.makeText(this, "Cancelado nuevo", Toast.LENGTH_LONG).show()
+                }
+            EditItemActivity.EDIT_FOR_EDIT ->
+                when (resultCode) {
+                    Activity.RESULT_OK -> { // TODO: Change the text displayed
+                        data?.extras?.let{
+                            val device: Device = it.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
+                            deviceVM.updateDevice(device)
+                            Toast.makeText(this, "Recibida edición", Toast.LENGTH_LONG).show()
+                        }
+                    }
+                    Activity.RESULT_CANCELED -> { // TODO: Change the text displayed
+                        Toast.makeText(this, "Cancelada edición", Toast.LENGTH_LONG).show()
+                    }
+                }
+        }
+    }
+
+    // Helper functions for readability
+    private fun recyclerViewSetup(){
+        // Create the adapter and assign it to the RecyclerView
         adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
         recview_main.layoutManager = LinearLayoutManager(this)
 
+        // Create the ViewModel and set the observer to notify the adapter when devices are changed
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this,
             Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
 
+        // Create the Helper Class to manage swipes and moves of devices
         val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
             ItemTouchHelper.UP or ItemTouchHelper.DOWN,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -51,27 +106,12 @@ class MainActivity : AppCompatActivity() {
                 onDeviceSwiped(viewHolder.adapterPosition)
             }
         }
+        // Assign the helper to the RecyclerView
         val touchHelper = ItemTouchHelper(touchHelperCallback)
         touchHelper.attachToRecyclerView(recview_main)
-
-        setupListeners()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.menu_main_item_about -> showAbout()
-            R.id.menu_main_add_fake_data -> addFakeData()
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
-    }
-
-    private fun setupListeners(){
+    private fun listenersSetup(){
         fab_main.setOnClickListener {
             val intent = Intent(this@MainActivity, EditItemActivity::class.java)
             val extras = Bundle()
@@ -106,45 +146,13 @@ class MainActivity : AppCompatActivity() {
         textView.setTextColor(defaultColor)
 
         val builder = AlertDialog.Builder(this)
-        builder.setIcon(R.mipmap.ic_launcher)
-        builder.setTitle(R.string.app_name)
-        builder.setView(messageView)
-        builder.setPositiveButton("Ok", null)
-        builder.create()
-        builder.show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        when (requestCode) {
-            EditItemActivity.EDIT_FOR_NEW ->
-                when (resultCode) {
-                    Activity.RESULT_OK -> {
-                        Toast.makeText(this, "Recibido", Toast.LENGTH_LONG).show()
-                        val extras = data?.extras
-                        if (extras != null) {
-                            val device: Device = extras.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
-                            device.position = deviceVM.allDevices.value?.size ?: 0
-                            deviceVM.insert(device)
-                        }
-                    }
-                    Activity.RESULT_CANCELED ->
-                        Toast.makeText(this, "Cancelado nuevo", Toast.LENGTH_LONG).show()
-                }
-            EditItemActivity.EDIT_FOR_EDIT ->
-                when (resultCode) {
-                    Activity.RESULT_OK -> {
-                        Toast.makeText(this, "Recibido", Toast.LENGTH_LONG).show()
-                        val extras = data?.extras
-                        if (extras != null) {
-                            val device: Device = extras.getParcelable(EditItemActivity.EXTRA_DEVICE) ?: return
-                            deviceVM.updateDevice(device)
-                        }
-                    }
-                    Activity.RESULT_CANCELED -> {
-                        Toast.makeText(this, "Cancelada edición", Toast.LENGTH_LONG).show()
-                    }
-                }
+        with(builder) {
+            setIcon(R.mipmap.ic_launcher)
+            setTitle(R.string.app_name)
+            setView(messageView)
+            setPositiveButton(R.string.dialog_ok, null)
+            create()
+            show()
         }
     }
 
