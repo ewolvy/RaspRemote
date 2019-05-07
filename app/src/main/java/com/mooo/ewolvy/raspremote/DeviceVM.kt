@@ -31,11 +31,17 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
     }
 
     fun delete(device: Device) = scope.launch(Dispatchers.IO) {
+        allDevices.value?.let {for (others in it ){
+            if (others.position > device.position) {
+                others.position--
+                insert(others)
+            }
+        }}
         repository.delete(device)
     }
 
     fun updateDevice(device: Device) = scope.launch(Dispatchers.IO){
-        repository.update(device)
+        repository.insert(device)
     }
 
     override fun onCleared() {

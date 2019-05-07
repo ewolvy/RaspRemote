@@ -8,7 +8,7 @@ interface DeviceDao {
     @Query("SELECT * FROM device_table ORDER BY position ASC")
     fun getAllDevices(): LiveData<List<Device>>
 
-    @Insert
+    @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun insert(device: Device)
 
     @Delete

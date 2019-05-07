@@ -83,12 +83,12 @@ class MainActivity : AppCompatActivity() {
         // Create the adapter and assign it to the RecyclerView
         adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
-        recview_main.layoutManager = LinearLayoutManager(this)
+        recview_main.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
 
         // Create the ViewModel and set the observer to notify the adapter when devices are changed
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this,
-            Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
+            Observer<List<Device>?> {devices -> devices?.let { adapter.submitList(it) }})
 
         // Create the Helper Class to manage swipes and moves of devices
         val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
@@ -122,14 +122,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
-        adapter.moveDevices(fromPosition, toPosition)
-        deviceVM.updateDevice(adapter.getDeviceAt(fromPosition))
-        deviceVM.updateDevice(adapter.getDeviceAt(toPosition))
+        //adapter.moveDevices(fromPosition, toPosition)
+        val fromDevice = adapter.getDeviceAt(fromPosition)
+        fromDevice.position = toPosition
+        deviceVM.updateDevice(fromDevice)
+        val toDevice = adapter.getDeviceAt(toPosition)
+        toDevice.position = fromPosition
+        deviceVM.updateDevice(toDevice)
         return true
     }
 
     private fun onDeviceSwiped(position: Int){
         deviceVM.delete(adapter.getDeviceAt(position))
+        if (position + 1 < adapter.itemCount) { // TODO: Remove this notification when checked completely that position is updated correctly
+            adapter.notifyItemRangeChanged(position + 1, adapter.itemCount - position + 1)
+        }
     }
 
     @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog

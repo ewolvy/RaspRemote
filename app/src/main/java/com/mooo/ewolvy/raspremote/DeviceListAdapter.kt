@@ -11,40 +11,52 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
+import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
-class DeviceListAdapter internal constructor(
-    private val context: Context) : RecyclerView.Adapter<DeviceListAdapter.DeviceViewHolder>() {
+class DeviceListAdapter(private val context: Context) :
+    ListAdapter<Device, DeviceListAdapter.DeviceViewHolder>(DeviceDiffCallback()) {
 
-    private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var devices = emptyList<Device>() // Cached copy of devices
+    companion object{
+        class DeviceDiffCallback : DiffUtil.ItemCallback<Device>() {
+            override fun areItemsTheSame(oldItem: Device, newItem: Device): Boolean {
+                return oldItem._id == newItem._id
+            }
 
-    internal fun setDevices(devices: List<Device>) {
-        if (this.devices != devices) {
-            this.devices = devices
-            notifyDataSetChanged()
+            override fun areContentsTheSame(oldItem: Device, newItem: Device): Boolean {
+                return oldItem.name == newItem.name &&
+                        oldItem.type == newItem.type &&
+                        oldItem.server == newItem.server &&
+                        oldItem.port == newItem.port &&
+                        oldItem.username == newItem.username &&
+                        oldItem.password == newItem.password &&
+                        oldItem.alias == newItem.alias &&
+                        oldItem.certificateFile == newItem.certificateFile &&
+                        oldItem.position == newItem.position
+            }
         }
     }
 
-    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
-        val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
-        val devicePositionItemView: TextView = itemView.findViewById(R.id.textview_item_position)
-        val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
-        val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
-        val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
+    class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val deviceNameItemView: TextView = itemView.textview_item_name
+        val deviceLinkItemView: TextView = itemView.textview_item_link
+        val devicePositionItemView: TextView = itemView.textview_item_position
+        val deviceIconItemView: ImageView = itemView.imageview_item_icon
+        val deviceEditItemView: ImageView = itemView.imageview_item_edit
+        val deviceItemContainer: ConstraintLayout = itemView.item_container
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
-        val itemView = inflater.inflate(R.layout.main_item, parent, false)
-        return DeviceViewHolder(itemView)
+        return DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_item, parent, false))
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        val current = devices[position]
+        val current = getItem(position)
         val linkText = "${current.server}:${current.port}/${current.alias}"
 
         holder.deviceNameItemView.text = current.name
@@ -72,16 +84,14 @@ class DeviceListAdapter internal constructor(
         }
     }
 
-    fun moveDevices (fromPosition: Int, toPosition: Int){
-        devices[fromPosition].position = toPosition
-        devices[toPosition].position = fromPosition
+    /*fun moveDevices (fromPosition: Int, toPosition: Int){
+        getItem(fromPosition).position = toPosition
+        getItem(toPosition).position = fromPosition
         Collections.swap(devices, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
-    }
+    }*/
 
     fun getDeviceAt (position: Int): Device{
-        return devices[position]
+        return getItem(position)
     }
-
-    override fun getItemCount() = devices.size
 }
