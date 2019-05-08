@@ -20,4 +20,8 @@ class DeviceRepository (private val deviceDao: DeviceDao) {
     fun update(device: Device){
         deviceDao.update(device)
     }
+
+    fun getDevices(): LiveData<List<Device>> {
+        return allDevices
+    }
 }

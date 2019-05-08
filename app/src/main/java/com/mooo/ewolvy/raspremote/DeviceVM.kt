@@ -23,7 +23,7 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
     init {
         val devicesDao = DeviceRoomDB.getDatabase(application).deviceDao()
         repository = DeviceRepository(devicesDao)
-        allDevices = repository.allDevices
+        allDevices = repository.getDevices()
     }
 
     fun insert(device: Device) = scope.launch(Dispatchers.IO) {
@@ -34,7 +34,7 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
         allDevices.value?.let {for (others in it ){
             if (others.position > device.position) {
                 others.position--
-                insert(others)
+                repository.update(others)
             }
         }}
         repository.delete(device)
