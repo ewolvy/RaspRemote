@@ -4,7 +4,7 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 
 class DeviceRepository (private val deviceDao: DeviceDao) {
-    val allDevices: LiveData<List<Device>> = deviceDao.getAllDevices()
+    private val allDevices: LiveData<List<Device>> = deviceDao.getAllDevices()
 
     @WorkerThread
     fun insert(device: Device) {

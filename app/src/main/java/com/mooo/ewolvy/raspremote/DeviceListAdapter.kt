@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.main_item.view.*
-import java.util.*
 
 class DeviceListAdapter(private val context: Context) :
     ListAdapter<Device, DeviceListAdapter.DeviceViewHolder>(DeviceDiffCallback()) {

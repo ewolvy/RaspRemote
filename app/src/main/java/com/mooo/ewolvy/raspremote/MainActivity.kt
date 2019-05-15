@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         // Create the adapter and assign it to the RecyclerView
         adapter = DeviceListAdapter(this)
         recview_main.adapter = adapter
-        recview_main.layoutManager = LinearLayoutManager(this) as RecyclerView.LayoutManager?
+        recview_main.layoutManager = LinearLayoutManager(this)
 
         // Create the ViewModel and set the observer to notify the adapter when devices are changed
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
