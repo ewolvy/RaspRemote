@@ -129,6 +129,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDeviceSwiped(position: Int){
+        adapter.notifyItemRemoved(position)
         deviceVM.delete(adapter.getDeviceAt(position))
     }
 

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Range
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,6 @@ class DeviceListAdapter internal constructor(
     inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
-        val devicePositionItemView: TextView = itemView.findViewById(R.id.textview_item_position)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
         val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
         val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
@@ -49,7 +49,6 @@ class DeviceListAdapter internal constructor(
 
         holder.deviceNameItemView.text = current.name
         holder.deviceLinkItemView.text = linkText
-        holder.devicePositionItemView.text = current.position.toString()
 
         holder.deviceIconItemView.setImageResource(when (current.type){
             0, 1 -> R.drawable.ic_air_conditioning
