@@ -133,6 +133,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onDeviceSwiped(position: Int){
+        adapter.notifyItemRemoved(position)
         deviceVM.delete(adapter.getDeviceAt(position))
         if (position + 1 < adapter.itemCount) { // TODO: Remove this notification when checked completely that position is updated correctly
             adapter.notifyItemRangeChanged(position + 1, adapter.itemCount - position + 1)
