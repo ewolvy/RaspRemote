@@ -31,6 +31,12 @@ class DeviceVM (application: Application) : AndroidViewModel(application) {
     }
 
     fun delete(device: Device) = scope.launch(Dispatchers.IO) {
+        allDevices.value?.let {for (others in it ){
+            if (others.position > device.position) {
+                others.position--
+                repository.update(others)
+            }
+        }}
         repository.delete(device)
     }
 

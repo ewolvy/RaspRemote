@@ -3,6 +3,7 @@ package com.mooo.ewolvy.raspremote
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -105,6 +106,45 @@ class MainActivity : AppCompatActivity() {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 onDeviceSwiped(viewHolder.adapterPosition)
             }
+
+            override fun onChildDraw(
+                c: Canvas,
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                dX: Float,
+                dY: Float,
+                actionState: Int,
+                isCurrentlyActive: Boolean
+            ) {
+                // Progressive faint on delete gesture
+                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
+                    val width = viewHolder.itemView.width.toFloat()
+                    val alpha = 1.0f - Math.abs(dX) / width
+                    viewHolder.itemView.alpha = alpha
+                    viewHolder.itemView.translationX = dX
+                } else {
+                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+                }
+            }
+
+            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+                super.clearView(recyclerView, viewHolder)
+                if (viewHolder is ItemTouchHelperViewHolder) {
+                    val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
+                    itemViewHolder.onItemClear(resources.getColor(R.color.colorPrimaryLight, theme))
+                }
+            }
+
+            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
+                // We only want the active item
+                if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                    if (viewHolder is ItemTouchHelperViewHolder) {
+                        val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
+                        itemViewHolder.onItemSelected(resources.getColor(R.color.colorPrimaryDark, theme))
+                    }
+                }
+
+                super.onSelectedChanged(viewHolder, actionState)            }
         }
         // Assign the helper to the RecyclerView
         val touchHelper = ItemTouchHelper(touchHelperCallback)
@@ -130,6 +170,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun onDeviceSwiped(position: Int){
         deviceVM.delete(adapter.getDeviceAt(position))
+        adapter.deleteDevice(position)
+        adapter.notifyItemRemoved(position)
     }
 
     @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog

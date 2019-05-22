@@ -3,6 +3,7 @@ package com.mooo.ewolvy.raspremote
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,13 +30,21 @@ class DeviceListAdapter internal constructor(
         }
     }
 
-    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
         val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
         val devicePositionItemView: TextView = itemView.findViewById(R.id.textview_item_position)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
         val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
         val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
+
+        override fun onItemSelected(backgroundColor: Int) {
+            itemView.setBackgroundColor(backgroundColor)
+        }
+
+        override fun onItemClear(backgroundColor: Int) {
+            itemView.setBackgroundColor(backgroundColor)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
@@ -84,4 +93,8 @@ class DeviceListAdapter internal constructor(
     }
 
     override fun getItemCount() = devices.size
+
+    fun deleteDevice(position: Int) {
+        notifyItemRemoved(position)
+    }
 }

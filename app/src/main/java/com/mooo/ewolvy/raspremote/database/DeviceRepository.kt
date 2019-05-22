@@ -13,13 +13,6 @@ class DeviceRepository (private val deviceDao: DeviceDao) {
 
     @WorkerThread
     fun delete(device: Device) {
-        val position = device.position
-        val last = (allDevices.value?.size ?: 1) - 1
-        if (position < last){
-            for (x in position + 1..last){
-                allDevices.value?.get(x)?.position = x - 1
-            }
-        }
         deviceDao.delete(device)
     }
 
