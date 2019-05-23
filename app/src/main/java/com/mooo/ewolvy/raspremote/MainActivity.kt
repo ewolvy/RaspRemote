@@ -137,14 +137,15 @@ class MainActivity : AppCompatActivity() {
 
             override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                 // We only want the active item
-                if (actionState != ItemTouchHelper.ACTION_STATE_IDLE) {
+                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                     if (viewHolder is ItemTouchHelperViewHolder) {
                         val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
-                        itemViewHolder.onItemSelected(resources.getColor(R.color.colorPrimaryDark, theme))
+                        itemViewHolder.onItemSelected(resources.getColor(R.color.colorPrimary, theme))
                     }
                 }
 
-                super.onSelectedChanged(viewHolder, actionState)            }
+                super.onSelectedChanged(viewHolder, actionState)
+            }
         }
         // Assign the helper to the RecyclerView
         val touchHelper = ItemTouchHelper(touchHelperCallback)
