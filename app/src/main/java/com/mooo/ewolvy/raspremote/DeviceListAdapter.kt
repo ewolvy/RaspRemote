@@ -11,56 +11,52 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.main_item.view.*
+import java.util.*
 
-class DeviceListAdapter(private val context: Context) :
-    ListAdapter<Device, DeviceListAdapter.DeviceViewHolder>(DeviceDiffCallback()) {
+class DeviceListAdapter internal constructor(
+    private val context: Context) : RecyclerView.Adapter<DeviceListAdapter.DeviceViewHolder>() {
 
-    companion object{
-        class DeviceDiffCallback : DiffUtil.ItemCallback<Device>() {
-            override fun areItemsTheSame(oldItem: Device, newItem: Device): Boolean {
-                return oldItem._id == newItem._id
-            }
+    private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private var devices = emptyList<Device>() // Cached copy of devices
 
-            override fun areContentsTheSame(oldItem: Device, newItem: Device): Boolean {
-                return oldItem.name == newItem.name &&
-                        oldItem.type == newItem.type &&
-                        oldItem.server == newItem.server &&
-                        oldItem.port == newItem.port &&
-                        oldItem.username == newItem.username &&
-                        oldItem.password == newItem.password &&
-                        oldItem.alias == newItem.alias &&
-                        oldItem.certificateFile == newItem.certificateFile &&
-                        oldItem.position == newItem.position
-            }
+    internal fun setDevices(devices: List<Device>) {
+        if (this.devices != devices) {
+            this.devices = devices
+            notifyDataSetChanged()
         }
     }
 
-    class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val deviceNameItemView: TextView = itemView.textview_item_name
-        val deviceLinkItemView: TextView = itemView.textview_item_link
-        val devicePositionItemView: TextView = itemView.textview_item_position
-        val deviceIconItemView: ImageView = itemView.imageview_item_icon
-        val deviceEditItemView: ImageView = itemView.imageview_item_edit
-        val deviceItemContainer: ConstraintLayout = itemView.item_container
+    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
+        val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
+        val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
+        val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
+        val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
+        val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
+
+        override fun onItemSelected(backgroundColor: Int) {
+            itemView.item_container.setBackgroundColor(backgroundColor)
+        }
+
+        override fun onItemClear(backgroundColor: Int) {
+            itemView.item_container.setBackgroundColor(backgroundColor)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
-        return DeviceViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.main_item, parent, false))
+        val itemView = inflater.inflate(R.layout.main_item, parent, false)
+        return DeviceViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
-        val current = getItem(position)
+        val current = devices[position]
         val linkText = "${current.server}:${current.port}/${current.alias}"
 
         holder.deviceNameItemView.text = current.name
         holder.deviceLinkItemView.text = linkText
-        holder.devicePositionItemView.text = current.position.toString()
 
         holder.deviceIconItemView.setImageResource(when (current.type){
             0, 1 -> R.drawable.ic_air_conditioning
@@ -83,14 +79,20 @@ class DeviceListAdapter(private val context: Context) :
         }
     }
 
-    /*fun moveDevices (fromPosition: Int, toPosition: Int){
-        getItem(fromPosition).position = toPosition
-        getItem(toPosition).position = fromPosition
+    fun moveDevices (fromPosition: Int, toPosition: Int){
+        devices[fromPosition].position = toPosition
+        devices[toPosition].position = fromPosition
         Collections.swap(devices, fromPosition, toPosition)
         notifyItemMoved(fromPosition, toPosition)
-    }*/
+    }
 
     fun getDeviceAt (position: Int): Device{
-        return getItem(position)
+        return devices[position]
+    }
+
+    override fun getItemCount() = devices.size
+
+    fun deleteDevice(position: Int) {
+        notifyItemRemoved(position)
     }
 }
