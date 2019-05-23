@@ -44,6 +44,20 @@ class DeviceListAdapter internal constructor(
         override fun onItemClear(backgroundColor: Int) {
             itemView.item_container.setBackgroundColor(backgroundColor)
         }
+
+        override fun onDeviceSwiped(position: Int, viewModel: DeviceVM) {
+            viewModel.delete(getDeviceAt(position))
+            deleteDevice(position)
+            notifyItemRemoved(position)
+
+        }
+
+        override fun onDeviceMoved(from: Int, to: Int, viewModel: DeviceVM): Boolean {
+            moveDevices(from, to)
+            viewModel.updateDevice(getDeviceAt(from))
+            viewModel.updateDevice(getDeviceAt(to))
+            return true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {

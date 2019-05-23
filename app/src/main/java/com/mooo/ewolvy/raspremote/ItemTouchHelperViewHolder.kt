@@ -23,4 +23,8 @@ interface ItemTouchHelperViewHolder {
      * move or swipe, and the active item state should be cleared.
      */
     fun onItemClear(backgroundColor: Int)
+
+    fun onDeviceSwiped(position: Int, viewModel: DeviceVM)
+
+    fun onDeviceMoved(from: Int, to: Int, viewModel: DeviceVM): Boolean
 }

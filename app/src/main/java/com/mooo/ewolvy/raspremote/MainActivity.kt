@@ -3,7 +3,6 @@ package com.mooo.ewolvy.raspremote
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Canvas
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -16,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -91,63 +89,10 @@ class MainActivity : AppCompatActivity() {
         deviceVM.allDevices.observe(this,
             Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
 
-        // Create the Helper Class to manage swipes and moves of devices
-        val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                onDeviceSwiped(viewHolder.adapterPosition)
-            }
-
-            override fun onChildDraw(
-                c: Canvas,
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                dX: Float,
-                dY: Float,
-                actionState: Int,
-                isCurrentlyActive: Boolean
-            ) {
-                // Progressive faint on delete gesture
-                if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    val width = viewHolder.itemView.width.toFloat()
-                    val alpha = 1.0f - Math.abs(dX) / width
-                    viewHolder.itemView.alpha = alpha
-                    viewHolder.itemView.translationX = dX
-                } else {
-                    super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                }
-            }
-
-            override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
-                super.clearView(recyclerView, viewHolder)
-                if (viewHolder is ItemTouchHelperViewHolder) {
-                    val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
-                    itemViewHolder.onItemClear(resources.getColor(R.color.colorPrimaryLight, theme))
-                }
-            }
-
-            override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
-                // We only want the active item
-                if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
-                    if (viewHolder is ItemTouchHelperViewHolder) {
-                        val itemViewHolder = viewHolder as ItemTouchHelperViewHolder
-                        itemViewHolder.onItemSelected(resources.getColor(R.color.colorPrimary, theme))
-                    }
-                }
-
-                super.onSelectedChanged(viewHolder, actionState)
-            }
-        }
-        // Assign the helper to the RecyclerView
+        // Assign the helper to manage swipes and moves of devices to the RecyclerView
+        val touchHelperCallback: ItemTouchHelper.SimpleCallback = ItemTouchHelperCallback(deviceVM,
+            resources.getColor(R.color.colorPrimary, theme),
+            resources.getColor(R.color.colorPrimaryLight, theme))
         val touchHelper = ItemTouchHelper(touchHelperCallback)
         touchHelper.attachToRecyclerView(recview_main)
     }
@@ -160,19 +105,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtras(extras)
             startActivityForResult(intent, EditItemActivity.EDIT_FOR_NEW)
         }
-    }
-
-    private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
-        adapter.moveDevices(fromPosition, toPosition)
-        deviceVM.updateDevice(adapter.getDeviceAt(fromPosition))
-        deviceVM.updateDevice(adapter.getDeviceAt(toPosition))
-        return true
-    }
-
-    private fun onDeviceSwiped(position: Int){
-        deviceVM.delete(adapter.getDeviceAt(position))
-        adapter.deleteDevice(position)
-        adapter.notifyItemRemoved(position)
     }
 
     @SuppressLint("InflateParams") // One of the right uses of null on inflate method is for an AlertDialog
