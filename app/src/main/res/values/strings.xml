@@ -58,6 +58,13 @@
     <string name="edit_error_empty_certificate">You must select the certificate file</string>
     <string name="menu_main_add_fake_data">Add fake data</string>
     <string name="item_edit_description">Icon to edit the item</string>
-    <string name="dialog_ok">Ok</string>
+    <string name="dialog_ok">OK</string>
+    <string name="plug_on">On</string>
+    <string name="plug_off">Off</string>
+    <string name="plug_1" translatable="false">1</string>
+    <string name="plug_2" translatable="false">2</string>
+    <string name="plug_3" translatable="false">3</string>
+    <string name="plug_4" translatable="false">4</string>
+    <string name="plug_all">All</string>
 
 </resources>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".plug.PlugActivity">
+
+    <Button
+        android:id="@+id/button_plug_4_off"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_button"
+        android:text="@string/plug_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_3_off" />
+
+    <Button
+        android:id="@+id/button_plug_4_on"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_3_on"
+        tools:text="@string/plug_on" />
+
+    <TextView
+        android:id="@+id/textview_plug_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="monospace"
+        android:text="@string/plug_all"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_plug_4_on"
+        app:layout_constraintEnd_toStartOf="@+id/button_plug_1_off"
+        app:layout_constraintStart_toEndOf="@+id/button_plug_1_on"
+        app:layout_constraintTop_toTopOf="@+id/button_plug_4_on" />
+
+    <Button
+        android:id="@+id/button_plug_3_off"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_button"
+        android:text="@string/plug_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_2_off" />
+
+    <Button
+        android:id="@+id/button_plug_3_on"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_2_on"
+        tools:text="@string/plug_on" />
+
+    <TextView
+        android:id="@+id/textview_plug_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="monospace"
+        android:text="@string/plug_3"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_plug_3_on"
+        app:layout_constraintEnd_toStartOf="@+id/button_plug_3_off"
+        app:layout_constraintStart_toEndOf="@+id/button_plug_3_on"
+        app:layout_constraintTop_toTopOf="@+id/button_plug_3_on" />
+
+    <Button
+        android:id="@+id/button_plug_2_off"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_button"
+        android:text="@string/plug_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_1_off" />
+
+    <Button
+        android:id="@+id/button_plug_2_on"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_plug_1_on"
+        tools:text="@string/plug_on" />
+
+    <TextView
+        android:id="@+id/textview_plug_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="monospace"
+        android:text="@string/plug_2"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_plug_2_on"
+        app:layout_constraintEnd_toStartOf="@+id/button_plug_2_off"
+        app:layout_constraintStart_toEndOf="@+id/button_plug_2_on"
+        app:layout_constraintTop_toTopOf="@+id/button_plug_2_on" />
+
+    <Button
+        android:id="@+id/button_plug_1_on"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:background="@drawable/round_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/plug_on" />
+
+    <Button
+        android:id="@+id/button_plug_1_off"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/round_button"
+        android:text="@string/plug_off"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textview_plug_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:fontFamily="monospace"
+        android:text="@string/plug_1"
+        android:textSize="48sp"
+        app:layout_constraintBottom_toBottomOf="@+id/button_plug_1_on"
+        app:layout_constraintEnd_toStartOf="@+id/button_plug_1_off"
+        app:layout_constraintStart_toEndOf="@+id/button_plug_1_on"
+        app:layout_constraintTop_toTopOf="@+id/button_plug_1_on" />
+</androidx.constraintlayout.widget.ConstraintLayout>

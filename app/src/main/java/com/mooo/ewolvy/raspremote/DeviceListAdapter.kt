@@ -11,9 +11,10 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
+import com.mooo.ewolvy.raspremote.plug.PlugActivity
 import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
@@ -73,9 +74,10 @@ class DeviceListAdapter internal constructor(
         holder.deviceLinkItemView.text = linkText
 
         holder.deviceIconItemView.setImageResource(when (current.type){
-            0, 1 -> R.drawable.ic_air_conditioning
-            2 -> R.drawable.ic_ceiling_lamp
-            else -> R.drawable.ic_heater
+            Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> R.drawable.ic_air_conditioning
+            Device.TYPE_LAMP -> R.drawable.ic_ceiling_lamp
+            Device.TYPE_PLUG -> R.drawable.ic_heater
+            else -> R.drawable.question_mark
         })
 
         holder.deviceEditItemView.setOnClickListener {
@@ -88,8 +90,15 @@ class DeviceListAdapter internal constructor(
         }
 
         holder.deviceItemContainer.setOnClickListener{
-            Snackbar.make(it, "Prueba ${current.position}", Snackbar.LENGTH_LONG).show()
-            //TODO: launch activity depending on device type
+            when (current.type){
+                Device.TYPE_PLUG -> {
+                    val intent = Intent(context, PlugActivity::class.java)
+                    val extras = Bundle()
+                    extras.putParcelable("DEVICE", current)
+                    intent.putExtras(extras)
+                    startActivity(context as Activity, intent, null)
+                }
+            }
         }
     }
 
