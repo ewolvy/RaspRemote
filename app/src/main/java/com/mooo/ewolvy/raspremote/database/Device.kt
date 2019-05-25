@@ -20,7 +20,7 @@ data class Device (
     var position: Int = 0,
     val currentState: String = "") : Parcelable{
 
-    public companion object{
+    companion object{
         const val TYPE_AC_KAYSUN = 0
         const val TYPE_AC_PROKLIMA = 1
         const val TYPE_LAMP = 2
