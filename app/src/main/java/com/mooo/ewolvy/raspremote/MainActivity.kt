@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -88,25 +87,12 @@ class MainActivity : AppCompatActivity() {
         // Create the ViewModel and set the observer to notify the adapter when devices are changed
         deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
         deviceVM.allDevices.observe(this,
-            Observer<List<Device>?> {devices -> devices?.let { adapter.submitList(it) }})
+            Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
 
-        // Create the Helper Class to manage swipes and moves of devices
-        val touchHelperCallback: ItemTouchHelper.SimpleCallback = object : ItemTouchHelper.SimpleCallback(
-            ItemTouchHelper.UP or ItemTouchHelper.DOWN,
-            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
-            override fun onMove(
-                recyclerView: RecyclerView,
-                viewHolder: RecyclerView.ViewHolder,
-                target: RecyclerView.ViewHolder
-            ): Boolean {
-                return onDeviceMoved(viewHolder.adapterPosition, target.adapterPosition)
-            }
-
-            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                onDeviceSwiped(viewHolder.adapterPosition)
-            }
-        }
-        // Assign the helper to the RecyclerView
+        // Assign the helper to manage swipes and moves of devices to the RecyclerView
+        val touchHelperCallback: ItemTouchHelper.SimpleCallback = ItemTouchHelperCallback(deviceVM,
+            resources.getColor(R.color.colorPrimary, theme),
+            resources.getColor(R.color.colorPrimaryLight, theme))
         val touchHelper = ItemTouchHelper(touchHelperCallback)
         touchHelper.attachToRecyclerView(recview_main)
     }
@@ -118,25 +104,6 @@ class MainActivity : AppCompatActivity() {
             extras.putInt(EditItemActivity.EDIT_PURPOSE, EditItemActivity.EDIT_FOR_NEW)
             intent.putExtras(extras)
             startActivityForResult(intent, EditItemActivity.EDIT_FOR_NEW)
-        }
-    }
-
-    private fun onDeviceMoved(fromPosition: Int, toPosition:Int): Boolean{
-        //adapter.moveDevices(fromPosition, toPosition)
-        val fromDevice = adapter.getDeviceAt(fromPosition)
-        fromDevice.position = toPosition
-        deviceVM.updateDevice(fromDevice)
-        val toDevice = adapter.getDeviceAt(toPosition)
-        toDevice.position = fromPosition
-        deviceVM.updateDevice(toDevice)
-        return true
-    }
-
-    private fun onDeviceSwiped(position: Int){
-        adapter.notifyItemRemoved(position)
-        deviceVM.delete(adapter.getDeviceAt(position))
-        if (position + 1 < adapter.itemCount) { // TODO: Remove this notification when checked completely that position is updated correctly
-            adapter.notifyItemRangeChanged(position + 1, adapter.itemCount - position + 1)
         }
     }
 

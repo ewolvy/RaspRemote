@@ -48,6 +48,9 @@
     <string name="edit_error_empty_certificate">Debes seleccionar el archivo de certificado</string>
     <string name="menu_main_add_fake_data">Añadir datos falsos</string>
     <string name="item_edit_description">Icono para editar el elemento</string>
-    <string name="dialog_ok">Ok</string>
+    <string name="dialog_ok">OK</string>
+    <string name="plug_on">On</string>
+    <string name="plug_off">Off</string>
+    <string name="plug_all">Todos</string>
 
 </resources>

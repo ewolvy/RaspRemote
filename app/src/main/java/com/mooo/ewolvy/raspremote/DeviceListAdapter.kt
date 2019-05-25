@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Range
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,9 +11,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.raspremote.database.Device
+import com.mooo.ewolvy.raspremote.plug.PlugActivity
+import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
 class DeviceListAdapter internal constructor(
@@ -30,12 +31,34 @@ class DeviceListAdapter internal constructor(
         }
     }
 
-    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class DeviceViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), ItemTouchHelperViewHolder {
         val deviceNameItemView: TextView = itemView.findViewById(R.id.textview_item_name)
         val deviceLinkItemView: TextView = itemView.findViewById(R.id.textview_item_link)
         val deviceIconItemView: ImageView = itemView.findViewById(R.id.imageview_item_icon)
         val deviceEditItemView: ImageView = itemView.findViewById(R.id.imageview_item_edit)
         val deviceItemContainer: ConstraintLayout = itemView.findViewById(R.id.item_container)
+
+        override fun onItemSelected(backgroundColor: Int) {
+            itemView.item_container.setBackgroundColor(backgroundColor)
+        }
+
+        override fun onItemClear(backgroundColor: Int) {
+            itemView.item_container.setBackgroundColor(backgroundColor)
+        }
+
+        override fun onDeviceSwiped(position: Int, viewModel: DeviceVM) {
+            viewModel.delete(getDeviceAt(position))
+            deleteDevice(position)
+            notifyItemRemoved(position)
+
+        }
+
+        override fun onDeviceMoved(from: Int, to: Int, viewModel: DeviceVM): Boolean {
+            moveDevices(from, to)
+            viewModel.updateDevice(getDeviceAt(from))
+            viewModel.updateDevice(getDeviceAt(to))
+            return true
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceViewHolder {
@@ -51,9 +74,10 @@ class DeviceListAdapter internal constructor(
         holder.deviceLinkItemView.text = linkText
 
         holder.deviceIconItemView.setImageResource(when (current.type){
-            0, 1 -> R.drawable.ic_air_conditioning
-            2 -> R.drawable.ic_ceiling_lamp
-            else -> R.drawable.ic_heater
+            Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> R.drawable.ic_air_conditioning
+            Device.TYPE_LAMP -> R.drawable.ic_ceiling_lamp
+            Device.TYPE_PLUG -> R.drawable.ic_heater
+            else -> R.drawable.question_mark
         })
 
         holder.deviceEditItemView.setOnClickListener {
@@ -66,8 +90,15 @@ class DeviceListAdapter internal constructor(
         }
 
         holder.deviceItemContainer.setOnClickListener{
-            Snackbar.make(it, "Prueba ${current.position}", Snackbar.LENGTH_LONG).show()
-            //TODO: launch activity depending on device type
+            when (current.type){
+                Device.TYPE_PLUG -> {
+                    val intent = Intent(context, PlugActivity::class.java)
+                    val extras = Bundle()
+                    extras.putParcelable("DEVICE", current)
+                    intent.putExtras(extras)
+                    startActivity(context as Activity, intent, null)
+                }
+            }
         }
     }
 
@@ -83,4 +114,8 @@ class DeviceListAdapter internal constructor(
     }
 
     override fun getItemCount() = devices.size
+
+    fun deleteDevice(position: Int) {
+        notifyItemRemoved(position)
+    }
 }

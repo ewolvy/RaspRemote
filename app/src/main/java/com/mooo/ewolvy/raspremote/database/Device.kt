@@ -18,4 +18,12 @@ data class Device (
     val alias: String = "",
     val certificateFile: String = "",
     var position: Int = 0,
-    val currentState: String = "") : Parcelable
+    val currentState: String = "") : Parcelable{
+
+    public companion object{
+        const val TYPE_AC_KAYSUN = 0
+        const val TYPE_AC_PROKLIMA = 1
+        const val TYPE_LAMP = 2
+        const val TYPE_PLUG = 3
+    }
+}

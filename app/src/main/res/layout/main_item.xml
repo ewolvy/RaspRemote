@@ -6,7 +6,6 @@
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
     android:layout_margin="4dp"
-    app:cardBackgroundColor="@color/colorPrimaryLight"
     app:cardCornerRadius="6dp"
     app:cardElevation="6dp">
 
@@ -14,6 +13,8 @@
         android:id="@+id/item_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryLight"
+        android:foreground="?android:attr/selectableItemBackground"
         android:orientation="horizontal">
 
         <TextView
