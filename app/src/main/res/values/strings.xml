@@ -6,13 +6,13 @@
     <string name="item_icon_description">Icon for the kind of remote</string>
     <string name="about_title">About RaspRemote</string>
     <string name="about_description">Application made by eWolvy to control a Raspberry Pi\'s automation systems like air conditioning and smart plugs</string>
-    <string name="about_credits">The heater icon is made by <a href="https://www.flaticon.com/authors/prettycons" title="prettycons">Prettycons</a>,
+    <string name="about_credits">The wireless socket image was downloaded from <a href="https://pixabay.com/es/users/OpenClipart-Vectors-30363/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=155908">OpenClipart-Vectors</a> at <a href="https://pixabay.com/es/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content=155908">Pixabay</a>,
         the air-conditioner icon is made by <a href="https://www.flaticon.com/authors/surang" title="surang">Surang</a>
         and the ceiling-lamp icon is made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a>,
         all of them from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
         and are licensed by <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank" title="Creative Commons BY 3.0">CC 3.0 BY</a></string>
     <string name="menu_main_show_air_conditioners">Show air conditioners</string>
-    <string name="menu_main_show_heaters">Show heaters</string>
+    <string name="menu_main_show_smart_plugs">Show smart plugs</string>
     <string name="menu_main_show_lamps">Show lamps</string>
 
     <string name="settings_menu_item">Settings</string>
@@ -39,7 +39,7 @@
         <item>AC - Kaysun</item>
         <item>AC - ProKlima</item>
         <item>Lamp</item>
-        <item>Heater</item>
+        <item>Smart plug</item>
     </string-array>
     <string name="transition_name" translatable="false">transition_name</string>
     <string name="menu_edit_save">Save</string>

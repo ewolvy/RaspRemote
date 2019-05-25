@@ -76,8 +76,8 @@ class DeviceListAdapter internal constructor(
         holder.deviceIconItemView.setImageResource(when (current.type){
             Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> R.drawable.ic_air_conditioning
             Device.TYPE_LAMP -> R.drawable.ic_ceiling_lamp
-            Device.TYPE_PLUG -> R.drawable.ic_heater
-            else -> R.drawable.question_mark
+            Device.TYPE_PLUG -> R.drawable.ic_wireless_plug
+            else -> R.drawable.ic_question_mark
         })
 
         holder.deviceEditItemView.setOnClickListener {
