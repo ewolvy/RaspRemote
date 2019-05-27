@@ -26,4 +26,8 @@ data class Device (
         const val TYPE_LAMP = 2
         const val TYPE_PLUG = 3
     }
+
+    fun getFullAddress(): String {
+        return "$server:$port/$alias/"
+    }
 }
