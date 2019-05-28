@@ -22,7 +22,7 @@ import javax.net.ssl.TrustManagerFactory
 
 object SSLConnection {
     // Constants
-    private const val LOG_TAG = "SSLConnection"
+    private const val TAG = "SSLConnection"
 
     private fun setUpHttpsConnection(urlString: String,
                                      fileName: String): HttpsURLConnection? {
@@ -63,13 +63,14 @@ object SSLConnection {
                     val urlConnection = url.openConnection() as HttpsURLConnection
                     urlConnection.sslSocketFactory = sslContext.socketFactory
 
+                    Log.d(TAG, "setUpHttpsConnection: urlConnection created")
                     return urlConnection
                 }
             } else {
                 return null
             }
         } catch (ex: Exception) {
-            Log.e(LOG_TAG, "Failed to establish SSL connection to server: $ex")
+            Log.e(TAG, "Failed to establish SSL connection to server: $ex")
             return null
         }
 
@@ -91,7 +92,7 @@ object SSLConnection {
     }
 
     fun connect(urlAddress: String, username: String, password: String, certificate: String): String {
-        val urlConnection = setUpHttpsConnection(urlAddress, certificate) ?: return ""
+        val urlConnection = setUpHttpsConnection(urlAddress, certificate) ?: return "ERROR"
         var jsonResponse = ""
 
         try {
@@ -111,9 +112,9 @@ object SSLConnection {
                 }
             }
         } catch (e: IOException) {
-            Log.e(LOG_TAG, "IO Exception: $e")
+            Log.e(TAG, "IO Exception: $e")
         }
-
+        Log.d(TAG, "Response: $jsonResponse")
         return jsonResponse
     }
 }

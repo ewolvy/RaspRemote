@@ -1,11 +1,19 @@
 package com.mooo.ewolvy.raspremote.plug
 
+import android.Manifest
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.mooo.ewolvy.raspremote.CommandManager
 import com.mooo.ewolvy.raspremote.R
+import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_plug.*
 
 class PlugActivity : AppCompatActivity() {
+
+    val device: Device by lazy { getDevice(intent.extras) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +36,47 @@ class PlugActivity : AppCompatActivity() {
     }
 
     private fun doActionForButton (buttonId: Int){
-        when (buttonId){
-            R.id.button_plug_1_on ->  TODO("Yet to be done")
-            R.id.button_plug_1_off -> TODO("Yet to be done")
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) !=
+            PackageManager.PERMISSION_GRANTED) {
+
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
+                // TODO: Explain why we need the read permission
+            } else {
+                // Ask for permission
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    1
+                )
+            }
         }
+
+        val command = when (buttonId){
+            R.id.button_plug_1_on ->  "1_ON"
+            R.id.button_plug_1_off ->  "1_OFF"
+            R.id.button_plug_2_on -> "2_ON"
+            R.id.button_plug_2_off -> "2_OFF"
+            R.id.button_plug_3_on -> "3_ON"
+            R.id.button_plug_3_off -> "3_OFF"
+            R.id.button_plug_4_on -> "4_ON"
+            R.id.button_plug_4_off -> "4_OFF"
+            R.id.button_plug_all_on -> "ALL_ON"
+            R.id.button_plug_all_off -> "ALL_OFF"
+            else -> "ERROR"
+        }
+        CommandManager.sendCommand(device.getFullAddress(),
+            device.username,
+            device.password,
+            device.certificateFile,
+            command,
+            applicationContext)
+    }
+
+    private fun getDevice (extras: Bundle?): Device{
+        return extras?.getParcelable("DEVICE") ?: Device()
     }
 }

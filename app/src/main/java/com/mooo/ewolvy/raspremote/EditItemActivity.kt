@@ -16,15 +16,6 @@ import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_edit_item.*
 import org.json.JSONObject
 
-const val REQUEST_CODE_BCD = 3
-const val REQUEST_CODE_FC = 4
-const val MY_TIMEOUT = 5000L
-const val BCD_SERVER_PORT = 19103
-const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
-const val EDIT_TAG = "EDIT_TAG"
-const val MAX_PORT = 65535
-const val MIN_PORT = 1
-
 class EditItemActivity : AppCompatActivity() {
 
     companion object {
@@ -32,6 +23,15 @@ class EditItemActivity : AppCompatActivity() {
         const val EDIT_FOR_EDIT = 2
         const val EDIT_PURPOSE = "PURPOSE"
         const val EXTRA_DEVICE = "EXTRA_DEVICE"
+
+        const val REQUEST_CODE_BCD = 3
+        const val REQUEST_CODE_FC = 4
+        const val MY_TIMEOUT = 5000L
+        const val BCD_SERVER_PORT = 19103
+        const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
+        const val EDIT_TAG = "EDIT_TAG"
+        const val MAX_PORT = 65535
+        const val MIN_PORT = 1
     }
 
     private val purpose: Int by lazy {getPurpose(intent.extras)}
