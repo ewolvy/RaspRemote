@@ -1,11 +1,6 @@
 package com.mooo.ewolvy.raspremote
 
-import android.content.Context
-import android.widget.Toast
-import kotlinx.coroutines.CoroutineStart
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 object CommandManager {
     fun sendCommand (address: String,
@@ -13,10 +8,11 @@ object CommandManager {
                      password: String,
                      certificate: String,
                      command:String,
-                     appContext: Context){
+                     callback: (String) -> Unit){
         val fullAddress = "$address$command"
-        GlobalScope.launch(Dispatchers.Default, CoroutineStart.DEFAULT) {
+        GlobalScope.launch {
             val response = SSLConnection.connect(fullAddress, username, password, certificate)
+            callback (response)
         }
     }
 }

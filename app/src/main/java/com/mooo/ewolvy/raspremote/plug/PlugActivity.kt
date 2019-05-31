@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.mooo.ewolvy.raspremote.CommandManager
@@ -68,12 +69,19 @@ class PlugActivity : AppCompatActivity() {
             R.id.button_plug_all_off -> "ALL_OFF"
             else -> "ERROR"
         }
-        CommandManager.sendCommand(device.getFullAddress(),
+
+        CommandManager.sendCommand(
+            //device.getFullAddress(),
+            "https://ewolvy.mooo.com:1207/AAProKlima/",
             device.username,
             device.password,
-            device.certificateFile,
-            command,
-            applicationContext)
+            //device.certificateFile,
+            "/storage/self/primary/Juanjo/ewolvy.mooo.com.pem",
+            //command
+            "32_HOT_1") { this.runOnUiThread {
+                    Toast.makeText(this@PlugActivity, it, Toast.LENGTH_LONG).show()
+                }
+        }
     }
 
     private fun getDevice (extras: Bundle?): Device{
