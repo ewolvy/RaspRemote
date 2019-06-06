@@ -2,6 +2,7 @@ package com.mooo.ewolvy.raspremote.plug
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -67,7 +68,7 @@ class PlugActivity : AppCompatActivity() {
             R.id.button_plug_4_off -> "4_OFF"
             R.id.button_plug_all_on -> "ALL_ON"
             R.id.button_plug_all_off -> "ALL_OFF"
-            else -> "ERROR"
+            else -> "BUTTON_ID_ERROR"
         }
 
         CommandManager.sendCommand(
@@ -75,8 +76,8 @@ class PlugActivity : AppCompatActivity() {
             "https://ewolvy.mooo.com:1207/AAProKlima/",
             device.username,
             device.password,
-            //device.certificateFile,
-            "/storage/self/primary/Juanjo/ewolvy.mooo.com.pem",
+            device.certificateFile ?: Uri.EMPTY,
+            //Uri.parse("/storage/self/primary/Juanjo/ewolvy.mooo.com.pem"),
             //command
             "32_HOT_1") { this.runOnUiThread {
                     Toast.makeText(this@PlugActivity, it, Toast.LENGTH_LONG).show()

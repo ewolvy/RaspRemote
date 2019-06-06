@@ -110,7 +110,7 @@ class EditItemActivity : AppCompatActivity() {
                             edit_username.text.toString(),
                             edit_password.text.toString(),
                             edit_alias.text.toString(),
-                            certificateUri?.path ?: device.certificateFile,
+                            certificateUri ?: device.certificateFile,
                             device.position,  // will manage the correct order on the calling activity when creating / updating the device on the database
                             device.currentState)
                         val replyIntent = Intent()
@@ -160,7 +160,9 @@ class EditItemActivity : AppCompatActivity() {
         edit_username.setText(device.username)
         edit_password.setText(device.password)
         edit_alias.setText(device.alias)
-        edit_certificate_text.text = device.certificateFile.substring(device.certificateFile.lastIndexOf("/") + 1)
+        device.certificateFile?.path?.let {
+            edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
+        }
     }
 
     private fun setButtonListeners(){

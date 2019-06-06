@@ -1,5 +1,6 @@
 package com.mooo.ewolvy.raspremote
 
+import android.net.Uri
 import android.os.Environment
 import android.util.Base64
 import android.util.Log
@@ -25,20 +26,22 @@ object SSLConnection {
     private const val TAG = "SSLConnection"
 
     private fun setUpHttpsConnection(urlString: String,
-                                     fileName: String): HttpsURLConnection? {
+                                     fileName: Uri
+    ): HttpsURLConnection? {
         try {
             // Load CAs from an InputStream
             // (could be from a resource or ByteArrayInputStream or ...)
             val cf = CertificateFactory.getInstance("X.509")
 
             // Check file availability
-            val state = Environment.getExternalStorageState(File(fileName))
+            val state = Environment.getExternalStorageState(File(fileName.toString()))
             if (state == Environment.MEDIA_MOUNTED || state == Environment.MEDIA_MOUNTED_READ_ONLY) {
                 // Use certificate from file
-                val fis = FileInputStream(fileName)
+                val fis = FileInputStream(fileName.toString())
                 val bis = BufferedInputStream(fis)
 
                 if (bis.available() <= 0) {
+                    Log.d(TAG, "setUpHttpsConnection: BufferedInputStream didn't work. File: $fileName")
                     return null
                 } else {
                     val ca = cf.generateCertificate(bis)
@@ -67,6 +70,7 @@ object SSLConnection {
                     return urlConnection
                 }
             } else {
+                Log.d(TAG, "setUpHttpsConnection: State was $state FileName: $fileName")
                 return null
             }
         } catch (ex: Exception) {
@@ -91,7 +95,7 @@ object SSLConnection {
         return output.toString()
     }
 
-    fun connect(urlAddress: String, username: String, password: String, certificate: String): String {
+    fun connect(urlAddress: String, username: String, password: String, certificate: Uri): String {
         val urlConnection = setUpHttpsConnection(urlAddress, certificate) ?: return "ERROR"
         var jsonResponse = ""
 

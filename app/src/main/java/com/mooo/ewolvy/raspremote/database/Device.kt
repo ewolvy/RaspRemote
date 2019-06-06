@@ -1,5 +1,6 @@
 package com.mooo.ewolvy.raspremote.database
 
+import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -16,7 +17,7 @@ data class Device (
     val username: String = "",
     val password: String = "",
     val alias: String = "",
-    val certificateFile: String = "",
+    val certificateFile: Uri? = null,
     var position: Int = 0,
     val currentState: String = "") : Parcelable{
 

@@ -3,6 +3,7 @@ package com.mooo.ewolvy.raspremote
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -141,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             "juanjo",
             "m4ndr4k3",
             "AAKaysun",
-            "/cert.pem",
+            Uri.EMPTY,
             0,
             ""
         )
@@ -158,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             "juanjo",
             "m4ndr4k3",
             "Lamp",
-            "/cert.pem",
+            Uri.EMPTY,
             1,
             ""
         )
@@ -175,7 +176,7 @@ class MainActivity : AppCompatActivity() {
             "juanjo",
             "m4ndr4k3",
             "Estufa",
-            "/cert.pem",
+            Uri.EMPTY,
             2,
             ""
         )
