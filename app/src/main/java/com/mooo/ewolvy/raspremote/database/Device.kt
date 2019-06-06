@@ -17,7 +17,7 @@ data class Device (
     val username: String = "",
     val password: String = "",
     val alias: String = "",
-    val certificateFile: Uri? = null,
+    val certificateFile: Uri = Uri.EMPTY,
     var position: Int = 0,
     val currentState: String = "") : Parcelable{
 

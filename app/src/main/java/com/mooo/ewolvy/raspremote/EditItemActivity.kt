@@ -160,7 +160,7 @@ class EditItemActivity : AppCompatActivity() {
         edit_username.setText(device.username)
         edit_password.setText(device.password)
         edit_alias.setText(device.alias)
-        device.certificateFile?.path?.let {
+        device.certificateFile.path?.let {
             edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
         }
     }
@@ -219,9 +219,8 @@ class EditItemActivity : AppCompatActivity() {
             REQUEST_CODE_FC ->
                 if (resultCode == Activity.RESULT_OK) {
                     certificateUri = data?.data
-                    if (certificateUri != null && certificateUri?.path != null) {
-                        val uriPath: String = certificateUri?.path as String
-                        edit_certificate_text.text = uriPath.substring(uriPath.lastIndexOf("/") + 1)
+                    certificateUri?.path?.let{
+                        edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
                     }
                 }
             else -> Log.d(EDIT_TAG, "Unexpected activity returned some result!!!")

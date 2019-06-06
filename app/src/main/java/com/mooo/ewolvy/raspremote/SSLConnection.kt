@@ -1,5 +1,6 @@
 package com.mooo.ewolvy.raspremote
 
+import android.content.Context
 import android.net.Uri
 import android.os.Environment
 import android.util.Base64
@@ -8,7 +9,6 @@ import android.util.Log
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -26,7 +26,8 @@ object SSLConnection {
     private const val TAG = "SSLConnection"
 
     private fun setUpHttpsConnection(urlString: String,
-                                     fileName: Uri
+                                     fileName: Uri,
+                                     context: Context
     ): HttpsURLConnection? {
         try {
             // Load CAs from an InputStream
@@ -34,10 +35,10 @@ object SSLConnection {
             val cf = CertificateFactory.getInstance("X.509")
 
             // Check file availability
-            val state = Environment.getExternalStorageState(File(fileName.toString()))
+            val state = Environment.getExternalStorageState()
             if (state == Environment.MEDIA_MOUNTED || state == Environment.MEDIA_MOUNTED_READ_ONLY) {
                 // Use certificate from file
-                val fis = FileInputStream(fileName.toString())
+                val fis = context.contentResolver.openInputStream(fileName)
                 val bis = BufferedInputStream(fis)
 
                 if (bis.available() <= 0) {
@@ -95,8 +96,8 @@ object SSLConnection {
         return output.toString()
     }
 
-    fun connect(urlAddress: String, username: String, password: String, certificate: Uri): String {
-        val urlConnection = setUpHttpsConnection(urlAddress, certificate) ?: return "ERROR"
+    fun connect(urlAddress: String, username: String, password: String, certificate: Uri, context: Context): String {
+        val urlConnection = setUpHttpsConnection(urlAddress, certificate, context) ?: return "ERROR"
         var jsonResponse = ""
 
         try {

@@ -8,7 +8,7 @@ class Converters {
         @TypeConverter
         @JvmStatic
         fun fromUri(value: Uri): String{
-            return value.path ?: ""
+            return value.toString()
         }
 
         @TypeConverter

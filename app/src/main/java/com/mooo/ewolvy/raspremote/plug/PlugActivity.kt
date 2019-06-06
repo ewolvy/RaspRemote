@@ -2,7 +2,6 @@ package com.mooo.ewolvy.raspremote.plug
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -72,14 +71,14 @@ class PlugActivity : AppCompatActivity() {
         }
 
         CommandManager.sendCommand(
-            //device.getFullAddress(),
-            "https://ewolvy.mooo.com:1207/AAProKlima/",
+            device.getFullAddress(),
+            //"https://ewolvy.mooo.com:1207/AAProKlima/",
             device.username,
             device.password,
-            device.certificateFile ?: Uri.EMPTY,
-            //Uri.parse("/storage/self/primary/Juanjo/ewolvy.mooo.com.pem"),
-            //command
-            "32_HOT_1") { this.runOnUiThread {
+            device.certificateFile,
+            command,
+            //"32_HOT_1",
+            this) { this.runOnUiThread {
                     Toast.makeText(this@PlugActivity, it, Toast.LENGTH_LONG).show()
                 }
         }

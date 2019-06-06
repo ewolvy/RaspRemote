@@ -1,5 +1,6 @@
 package com.mooo.ewolvy.raspremote
 
+import android.content.Context
 import android.net.Uri
 import kotlinx.coroutines.*
 
@@ -8,11 +9,12 @@ object CommandManager {
                      username: String,
                      password: String,
                      certificate: Uri,
-                     command:String,
+                     command: String,
+                     context: Context,
                      callback: (String) -> Unit){
         val fullAddress = "$address$command"
         GlobalScope.launch {
-            val response = SSLConnection.connect(fullAddress, username, password, certificate)
+            val response = SSLConnection.connect(fullAddress, username, password, certificate, context)
             callback (response)
         }
     }
