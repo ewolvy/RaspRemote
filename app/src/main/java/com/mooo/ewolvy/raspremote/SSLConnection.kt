@@ -8,7 +8,6 @@ import android.util.Log
 
 import java.io.BufferedInputStream
 import java.io.BufferedReader
-import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -43,6 +42,8 @@ object SSLConnection {
 
                 if (bis.available() <= 0) {
                     Log.d(TAG, "setUpHttpsConnection: BufferedInputStream didn't work. File: $fileName")
+                    bis.close()
+                    fis?.close()
                     return null
                 } else {
                     val ca = cf.generateCertificate(bis)
@@ -68,6 +69,8 @@ object SSLConnection {
                     urlConnection.sslSocketFactory = sslContext.socketFactory
 
                     Log.d(TAG, "setUpHttpsConnection: urlConnection created")
+                    bis.close()
+                    fis?.close()
                     return urlConnection
                 }
             } else {
