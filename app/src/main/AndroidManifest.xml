@@ -3,7 +3,7 @@
     package="com.mooo.ewolvy.raspremote">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,10 +12,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".plug.PlugActivity"></activity>
-        <activity android:name=".ac.ACActivity" />
-        <activity android:name=".EditItemActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".activities.LampActivity"></activity>
+        <activity android:name=".activities.PlugActivity" />
+        <activity android:name=".activities.ACActivity" />
+        <activity android:name=".activities.EditItemActivity" />
+        <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,4 +1,4 @@
-package com.mooo.ewolvy.raspremote
+package com.mooo.ewolvy.raspremote.activities
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -16,6 +16,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.mooo.ewolvy.raspremote.DeviceListAdapter
+import com.mooo.ewolvy.raspremote.DeviceVM
+import com.mooo.ewolvy.raspremote.ItemTouchHelperCallback
+import com.mooo.ewolvy.raspremote.R
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -91,9 +95,11 @@ class MainActivity : AppCompatActivity() {
             Observer<List<Device>?> {devices -> devices?.let {adapter.setDevices(it)}})
 
         // Assign the helper to manage swipes and moves of devices to the RecyclerView
-        val touchHelperCallback: ItemTouchHelper.SimpleCallback = ItemTouchHelperCallback(deviceVM,
+        val touchHelperCallback: ItemTouchHelper.SimpleCallback = ItemTouchHelperCallback(
+            deviceVM,
             resources.getColor(R.color.colorPrimary, theme),
-            resources.getColor(R.color.colorPrimaryLight, theme))
+            resources.getColor(R.color.colorPrimaryLight, theme)
+        )
         val touchHelper = ItemTouchHelper(touchHelperCallback)
         touchHelper.attachToRecyclerView(recview_main)
     }

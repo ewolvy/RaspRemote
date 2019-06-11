@@ -13,8 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.mooo.ewolvy.raspremote.activities.EditItemActivity
 import com.mooo.ewolvy.raspremote.database.Device
-import com.mooo.ewolvy.raspremote.plug.PlugActivity
+import com.mooo.ewolvy.raspremote.activities.PlugActivity
 import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 

@@ -1,4 +1,4 @@
-package com.mooo.ewolvy.raspremote
+package com.mooo.ewolvy.raspremote.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import com.mooo.ewolvy.broadcastdiscovery.BroadcastDiscoveryActivity
 import com.mooo.ewolvy.broadcastdiscovery.FetchDataErrorStatus
+import com.mooo.ewolvy.raspremote.R
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.activity_edit_item.*
 import org.json.JSONObject
@@ -101,7 +102,7 @@ class EditItemActivity : AppCompatActivity() {
                 with(builder) {
                     setTitle(R.string.dialog_confirm_title)
                     setMessage(R.string.dialog_save_message)
-                    setPositiveButton(R.string.dialog_yes) {_, _ ->
+                    setPositiveButton(R.string.dialog_yes) { _, _ ->
                         val returnDevice = Device(device._id,
                             edit_name.text.toString(),
                             edit_type.selectedItemPosition,
@@ -118,7 +119,7 @@ class EditItemActivity : AppCompatActivity() {
                         setResult(Activity.RESULT_OK, replyIntent)
                         finish()
                     }
-                    setNeutralButton(R.string.dialog_no) {_, _ ->
+                    setNeutralButton(R.string.dialog_no) { _, _ ->
                         return@setNeutralButton
                     }
                 }
@@ -132,12 +133,12 @@ class EditItemActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this@EditItemActivity)
         builder.setTitle(R.string.dialog_confirm_title)
         builder.setMessage(R.string.dialog_discard_message)
-        builder.setPositiveButton(R.string.dialog_yes) {_, _ ->
+        builder.setPositiveButton(R.string.dialog_yes) { _, _ ->
             val replyIntent = Intent()
             setResult(Activity.RESULT_CANCELED, replyIntent)
             finish()
         }
-        builder.setNeutralButton(R.string.dialog_no) {_, _ ->
+        builder.setNeutralButton(R.string.dialog_no) { _, _ ->
             return@setNeutralButton
         }
         val dialog: AlertDialog = builder.create()
@@ -181,20 +182,32 @@ class EditItemActivity : AppCompatActivity() {
             .setAction(Intent.ACTION_OPEN_DOCUMENT)
             .addCategory(Intent.CATEGORY_OPENABLE)
 
-        startActivityForResult(Intent.createChooser(intent, "Select a file"), REQUEST_CODE_FC)
+        startActivityForResult(Intent.createChooser(intent, "Select a file"),
+            REQUEST_CODE_FC
+        )
     }
 
     private fun startBroadcastDiscoveryActivity(){
         val intent = Intent(this@EditItemActivity, BroadcastDiscoveryActivity::class.java)
         val extras = Bundle()
-        extras.putString(BroadcastDiscoveryActivity.EXTRA_SERVICE, SERVICE_REQUESTED)
-        extras.putInt(BroadcastDiscoveryActivity.EXTRA_PORT, BCD_SERVER_PORT)
-        extras.putLong(BroadcastDiscoveryActivity.EXTRA_TIMEOUT, MY_TIMEOUT)
-        extras.putLong(BroadcastDiscoveryActivity.EXTRA_RESEND_TIME, MY_TIMEOUT)
+        extras.putString(BroadcastDiscoveryActivity.EXTRA_SERVICE,
+            SERVICE_REQUESTED
+        )
+        extras.putInt(BroadcastDiscoveryActivity.EXTRA_PORT,
+            BCD_SERVER_PORT
+        )
+        extras.putLong(BroadcastDiscoveryActivity.EXTRA_TIMEOUT,
+            MY_TIMEOUT
+        )
+        extras.putLong(BroadcastDiscoveryActivity.EXTRA_RESEND_TIME,
+            MY_TIMEOUT
+        )
 
         intent.putExtra(BroadcastDiscoveryActivity.BROADCAST_EXTRAS, extras)
 
-        startActivityForResult(intent, REQUEST_CODE_BCD)
+        startActivityForResult(intent,
+            REQUEST_CODE_BCD
+        )
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

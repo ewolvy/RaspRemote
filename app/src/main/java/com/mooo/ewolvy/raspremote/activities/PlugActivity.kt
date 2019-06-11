@@ -1,4 +1,4 @@
-package com.mooo.ewolvy.raspremote.plug
+package com.mooo.ewolvy.raspremote.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -72,12 +72,10 @@ class PlugActivity : AppCompatActivity() {
 
         CommandManager.sendCommand(
             device.getFullAddress(),
-            //"https://ewolvy.mooo.com:1207/AAProKlima/",
             device.username,
             device.password,
             device.certificateFile,
             command,
-            //"32_HOT_1",
             this) { this.runOnUiThread {
                     Toast.makeText(this@PlugActivity, it, Toast.LENGTH_LONG).show()
                 }
