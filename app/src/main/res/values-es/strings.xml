@@ -52,5 +52,14 @@
     <string name="plug_on">On</string>
     <string name="plug_off">Off</string>
     <string name="plug_all">Todos</string>
+    <string name="lamp_power_button">Botón de encendido</string>
+    <string name="lamp_night_button">Modo noche</string>
+    <string name="lamp_less_bright">Bajar brillo</string>
+    <string name="lamp_more_bright">Subir brillo</string>
+    <string name="lamp_triangle">Triángulo</string>
+    <string name="lamp_music">Música</string>
+    <string name="lamp_cooler">Color más frío</string>
+    <string name="lamp_warmer">Color más cálido</string>
+    <string name="lamp_heat_cold_gradient">Gradiente frío calor</string>
 
 </resources>

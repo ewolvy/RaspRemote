@@ -6,13 +6,226 @@
     android:layout_height="match_parent"
     tools:context=".activities.LampActivity">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+    <ImageButton
+        android:id="@+id/ib_lamp_power"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/ic_brightness_50"
+        android:layout_marginTop="48dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_power_button"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_power" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_night"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="32dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_night_button"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_power"
+        app:srcCompat="@drawable/ic_night" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_less_bright"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="64dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_less_bright"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_power"
+        app:srcCompat="@drawable/ic_brightness_less" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_more_bright"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="48dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_more_bright"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_less_bright"
+        app:srcCompat="@drawable/ic_brightness_plus" />
+
+    <ImageView
+        android:id="@+id/imageview_heat_cold_gradient"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:adjustViewBounds="false"
+        android:contentDescription="@string/lamp_heat_cold_gradient"
+        android:cropToPadding="false"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_warmer"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_cooler"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_warmer"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_warmer"
+        app:srcCompat="@drawable/color_scale" />
+
+    <ImageView
+        android:id="@+id/imageview_lamp_triangle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:contentDescription="@string/lamp_triangle"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_less_bright"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_more_bright"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_less_bright"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_less_bright"
+        app:srcCompat="@drawable/triangle_rectangle" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_music"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_night"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_night"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_power"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_power"
+        app:srcCompat="@drawable/ic_music" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_warmer"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_warmer"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_less_bright"
+        app:srcCompat="@drawable/ic_warmer" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_cooler"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="48dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:contentDescription="@string/lamp_cooler"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_warmer"
+        app:srcCompat="@drawable/ic_cooler" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_bright_50"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_bright_25"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_bright_75"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_bright_25"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_bright_25"
+        app:srcCompat="@drawable/ic_brightness_50" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_bright_75"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_bright_50"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_bright_100"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_bright_50"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_bright_50"
+        app:srcCompat="@drawable/ic_brightness_75" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_bright_100"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="24dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_lamp_bright_75"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ib_lamp_bright_75"
+        app:layout_constraintTop_toTopOf="@+id/ib_lamp_bright_75"
+        app:srcCompat="@drawable/ic_brightness_100" />
+
+    <ImageButton
+        android:id="@+id/ib_lamp_bright_25"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@android:drawable/stat_notify_sync_noanim"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/ib_lamp_bright_50"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_warmer"
+        app:layout_constraintVertical_bias="0.32999998"
+        app:srcCompat="@drawable/ic_brightness_25" />
+
+    <TextView
+        android:id="@+id/textview_lamp_25"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/lamp_25"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ib_lamp_bright_25"
+        app:layout_constraintStart_toStartOf="@+id/ib_lamp_bright_25"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_bright_25" />
+
+    <TextView
+        android:id="@+id/textview_lamp_50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/lamp_50"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ib_lamp_bright_50"
+        app:layout_constraintStart_toStartOf="@+id/ib_lamp_bright_50"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_bright_50" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/lamp_75"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ib_lamp_bright_75"
+        app:layout_constraintStart_toStartOf="@+id/ib_lamp_bright_75"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_bright_75" />
+
+    <TextView
+        android:id="@+id/textview_lamp_100"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/lamp_100"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="@+id/ib_lamp_bright_100"
+        app:layout_constraintStart_toStartOf="@+id/ib_lamp_bright_100"
+        app:layout_constraintTop_toBottomOf="@+id/ib_lamp_bright_100" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
