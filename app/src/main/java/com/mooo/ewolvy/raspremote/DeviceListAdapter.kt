@@ -13,7 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.mooo.ewolvy.raspremote.activities.ACActivity
 import com.mooo.ewolvy.raspremote.activities.EditItemActivity
+import com.mooo.ewolvy.raspremote.activities.LampActivity
 import com.mooo.ewolvy.raspremote.database.Device
 import com.mooo.ewolvy.raspremote.activities.PlugActivity
 import kotlinx.android.synthetic.main.main_item.view.*
@@ -91,15 +93,15 @@ class DeviceListAdapter internal constructor(
         }
 
         holder.deviceItemContainer.setOnClickListener{
-            when (current.type){
-                Device.TYPE_PLUG -> {
-                    val intent = Intent(context, PlugActivity::class.java)
-                    val extras = Bundle()
-                    extras.putParcelable("DEVICE", current)
-                    intent.putExtras(extras)
-                    startActivity(context as Activity, intent, null)
-                }
+            val intent = when (current.type){
+                Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> Intent(context, ACActivity::class.java)
+                Device.TYPE_PLUG -> Intent(context, PlugActivity::class.java)
+                else -> Intent(context, LampActivity::class.java)
             }
+            val extras = Bundle()
+            extras.putParcelable("DEVICE", current)
+            intent.putExtras(extras)
+            startActivity(context as Activity, intent, null)
         }
     }
 

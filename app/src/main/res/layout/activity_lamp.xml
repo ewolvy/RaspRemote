@@ -90,7 +90,7 @@
         app:srcCompat="@drawable/triangle_rectangle" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/ib_lamp_music"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="8dp"
@@ -211,7 +211,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ib_lamp_bright_50" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textview_lamp_75"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
