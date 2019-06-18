@@ -79,5 +79,20 @@
     <string name="lamp_50" translatable="false">50%</string>
     <string name="lamp_75" translatable="false">75%</string>
     <string name="lamp_100" translatable="false">100%</string>
-
+    <string name="ac_auto">Auto</string>
+    <string name="ac_cool">Cool</string>
+    <string name="ac_dry">Dry</string>
+    <string name="ac_heat">Heat</string>
+    <string name="ac_fan">Fan</string>
+    <string name="ac_onoff_description">On/Off sign</string>
+    <string name="ac_sign_fan" translatable="false"><![CDATA[>>>]]></string>
+    <string name="ac_temp_plus_description">Increase one degree</string>
+    <string name="ac_temp_middle_description">Temperature image</string>
+    <string name="ac_temp_minus_description">Decrease one degree</string>
+    <string name="ac_ac_fan">Fan button</string>
+    <string name="ac_mode_description">Mode button</string>
+    <string name="ac_off_description">Off button</string>
+    <string name="ac_send_description">Send button</string>
+    <string name="ac_swing_description">Swing button</string>
+    <string name="ac_on_description">On button</string>
 </resources>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/button_ac_temp_plus"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/ac_temp_plus_description"
+        android:src="@drawable/temp_plus"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_fan"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_mode"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1" />
+
+    <ImageView
+        android:id="@+id/button_ac_temp_middle"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/ac_temp_middle_description"
+        android:src="@drawable/temp_middle"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_fan"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_mode"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_plus" />
+
+    <ImageView
+        android:id="@+id/button_ac_temp_minus"
+        android:layout_width="96dp"
+        android:layout_height="32dp"
+        android:layout_centerInParent="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@string/ac_temp_minus_description"
+        android:src="@drawable/temp_minus"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_fan"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_mode"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_middle" />
+
+    <ImageView
+        android:id="@+id/button_ac_fan"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@id/button_ac_temp_minus"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/ac_ac_fan"
+        android:src="@drawable/fan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/button_ac_mode"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_alignBottom="@id/button_ac_temp_minus"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/ac_mode_description"
+        android:src="@drawable/mode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/button_ac_off"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/ac_off_description"
+        android:src="@drawable/off"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_swing"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_on"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_minus"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <ImageView
+        android:id="@+id/button_ac_send"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/button_ac_temp_minus"
+        android:layout_marginTop="32dp"
+        android:layout_toStartOf="@id/button_ac_off"
+        android:contentDescription="@string/ac_send_description"
+        android:src="@drawable/send"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_on"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_minus" />
+
+    <ImageView
+        android:id="@+id/button_ac_swing"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/ac_swing_description"
+        android:src="@drawable/swing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_off"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_minus"
+        tools:layout_constraintTop_creator="1" />
+
+    <ImageView
+        android:id="@+id/button_ac_on"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/ac_on_description"
+        app:layout_constraintEnd_toStartOf="@+id/button_ac_off"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/button_ac_send"
+        app:layout_constraintTop_toBottomOf="@+id/button_ac_temp_minus"
+        app:srcCompat="@drawable/on" />
+</androidx.constraintlayout.widget.ConstraintLayout>
