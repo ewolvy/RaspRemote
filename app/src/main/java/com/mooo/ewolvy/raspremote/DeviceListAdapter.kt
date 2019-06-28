@@ -77,7 +77,7 @@ class DeviceListAdapter internal constructor(
         holder.deviceLinkItemView.text = linkText
 
         holder.deviceIconItemView.setImageResource(when (current.type){
-            Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> R.drawable.ic_air_conditioning
+            Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA, Device.TYPE_AC_GENERAL -> R.drawable.ic_air_conditioning
             Device.TYPE_LAMP -> R.drawable.ic_ceiling_lamp
             Device.TYPE_PLUG -> R.drawable.ic_wireless_plug
             else -> R.drawable.ic_question_mark
@@ -94,7 +94,7 @@ class DeviceListAdapter internal constructor(
 
         holder.deviceItemContainer.setOnClickListener{
             val intent = when (current.type){
-                Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA -> Intent(context, ACActivity::class.java)
+                Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA, Device.TYPE_AC_GENERAL -> Intent(context, ACActivity::class.java)
                 Device.TYPE_PLUG -> Intent(context, PlugActivity::class.java)
                 else -> Intent(context, LampActivity::class.java)
             }

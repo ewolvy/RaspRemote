@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
         android:id="@+id/textview_ac_auto_mode"
         android:layout_width="wrap_content"
@@ -184,6 +185,7 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/textview_ac_fan_header"
         app:layout_constraintLeft_toRightOf="@+id/textview_ac_fan_level_2"
         android:layout_marginStart="0dp" />
+
     <TextView
         android:id="@+id/textview_ac_fan_level_auto"
         android:layout_width="wrap_content"
@@ -196,9 +198,24 @@
         android:paddingRight="1dp"
         android:text="@string/ac_auto"
         android:textAllCaps="true"
-        android:visibility="visible"
+        android:visibility="invisible"
         app:layout_constraintBaseline_toBaselineOf="@+id/textview_ac_fan_header"
-        app:layout_constraintLeft_toRightOf="@+id/textview_ac_fan_level_3"
-        android:layout_marginStart="0dp" />
+        app:layout_constraintLeft_toRightOf="@+id/textview_ac_fan_level_3" />
+
+    <TextView
+        android:id="@+id/textview_ac_fan_level_quiet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textview_ac_fan_header"
+        android:layout_gravity="center_vertical"
+        android:layout_toEndOf="@id/textview_ac_fan_level_3"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:text="@string/ac_quiet"
+        android:textAllCaps="true"
+        android:visibility="invisible"
+        app:layout_constraintBaseline_toBaselineOf="@+id/textview_ac_fan_header"
+        app:layout_constraintStart_toEndOf="@+id/textview_ac_fan_level_auto" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

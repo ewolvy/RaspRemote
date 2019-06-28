@@ -29,6 +29,7 @@
     <string-array name="settings_array_types">
         <item>AA - Kaysun</item>
         <item>AA - ProKlima</item>
+        <item>AA - General</item>
         <item>Lámpara</item>
         <item>Enchufe inteligente</item>
     </string-array>
@@ -63,7 +64,7 @@
     <string name="lamp_heat_cold_gradient">Gradiente frío calor</string>
     <string name="ac_auto">Auto</string>
     <string name="ac_cool">Frío</string>
-    <string name="ac_fan">Ventilador</string>
+    <string name="ac_fan">Vent</string>
     <string name="ac_heat">Calefacción</string>
     <string name="ac_onoff_description">Señal encendido/apagado</string>
     <string name="ac_dry">Deshumidificador</string>
@@ -76,5 +77,6 @@
     <string name="ac_temp_middle_description">Imagen de temperatura</string>
     <string name="ac_temp_minus_description">Bajar un grado</string>
     <string name="ac_temp_plus_description">Subir un grado</string>
+    <string name="ac_quiet">Descanso</string>
 
 </resources>

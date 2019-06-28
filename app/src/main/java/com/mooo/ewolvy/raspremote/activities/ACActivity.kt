@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import com.mooo.ewolvy.raspremote.ac.ACStatus
 import com.mooo.ewolvy.raspremote.R
+import com.mooo.ewolvy.raspremote.ac.ACGeneral
 import com.mooo.ewolvy.raspremote.ac.ACKaysun
 import com.mooo.ewolvy.raspremote.ac.ACProKlima
 import com.mooo.ewolvy.raspremote.database.Device
@@ -32,6 +33,7 @@ class ACActivity : AppCompatActivity() {
         return when (device.type){
             Device.TYPE_AC_KAYSUN -> ACKaysun(device.currentState)
             Device.TYPE_AC_PROKLIMA -> ACProKlima(device.currentState)
+            Device.TYPE_AC_GENERAL -> ACGeneral(device.currentState)
             else -> ACKaysun(device.currentState)
         }
     }
@@ -84,7 +86,11 @@ class ACActivity : AppCompatActivity() {
     }
 
     private fun updateTemp(){
-        textview_ac_temperature.text = status.temp.toString()
+        if (status.isTempActive()) {
+            textview_ac_temperature.text = status.temp.toString()
+        } else {
+            textview_ac_temperature.text = getString(R.string.ac_inactive_temp)
+        }
     }
 
     private fun updateMode(){
@@ -107,6 +113,7 @@ class ACActivity : AppCompatActivity() {
         textview_ac_fan_level_2.visibility = View.INVISIBLE
         textview_ac_fan_level_3.visibility = View.INVISIBLE
         textview_ac_fan_level_auto.visibility = View.INVISIBLE
+        textview_ac_fan_level_quiet.visibility = View.INVISIBLE
         when (status.fan){
             ACStatus.FAN_AUTO -> textview_ac_fan_level_auto.visibility = View.VISIBLE
             ACStatus.FAN_1 -> textview_ac_fan_level_1.visibility = View.VISIBLE
@@ -118,6 +125,9 @@ class ACActivity : AppCompatActivity() {
                 textview_ac_fan_level_1.visibility = View.VISIBLE
                 textview_ac_fan_level_2.visibility = View.VISIBLE
                 textview_ac_fan_level_3.visibility = View.VISIBLE
+            }
+            ACGeneral.FAN_QUIET -> {
+                if (status is ACGeneral) textview_ac_fan_level_quiet.visibility = View.VISIBLE
             }
         }
     }

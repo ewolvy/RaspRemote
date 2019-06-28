@@ -38,6 +38,7 @@
     <string-array name="settings_array_types">
         <item>AC - Kaysun</item>
         <item>AC - ProKlima</item>
+        <item>AC - General</item>
         <item>Lamp</item>
         <item>Smart plug</item>
     </string-array>
@@ -95,4 +96,6 @@
     <string name="ac_send_description">Send button</string>
     <string name="ac_swing_description">Swing button</string>
     <string name="ac_on_description">On button</string>
+    <string name="ac_inactive_temp" translatable="false">--</string>
+    <string name="ac_quiet">Quiet</string>
 </resources>

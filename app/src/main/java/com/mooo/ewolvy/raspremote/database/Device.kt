@@ -24,8 +24,9 @@ data class Device (
     companion object{
         const val TYPE_AC_KAYSUN = 0
         const val TYPE_AC_PROKLIMA = 1
-        const val TYPE_LAMP = 2
-        const val TYPE_PLUG = 3
+        const val TYPE_AC_GENERAL = 2
+        const val TYPE_LAMP = 3
+        const val TYPE_PLUG = 4
     }
 
     fun getFullAddress(): String {

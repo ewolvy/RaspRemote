@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
         var device = Device (
             0,
             "Aire",
-            0,
+            Device.TYPE_AC_GENERAL,
             "https://ewolvy.mooo.com",
             1207,
             "juanjo",
@@ -159,7 +159,7 @@ class MainActivity : AppCompatActivity() {
         device = Device(
             0,
             "Lámpara",
-            2,
+            Device.TYPE_LAMP,
             "https://ewolvy.mooo.com",
             2106,
             "juanjo",
@@ -176,7 +176,7 @@ class MainActivity : AppCompatActivity() {
         device = Device(
             0,
             "Estufa",
-            3,
+            Device.TYPE_PLUG,
             "https://ewolvy.mooo.com",
             2106,
             "juanjo",
