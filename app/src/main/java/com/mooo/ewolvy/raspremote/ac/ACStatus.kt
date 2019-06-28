@@ -2,26 +2,26 @@ package com.mooo.ewolvy.raspremote.ac
 
 abstract class ACStatus (){
 
-    var temp: Int = 27
-    var fan: Int = 0
-    var mode: Int = 0
-    protected var activeFan: Boolean = true
-    protected var activeTemp: Boolean = true
+    protected var mTemp: Int = 27
+    protected var mFan: Int = 0
+    protected var mMode: Int = 0
+    protected var mActiveFan: Boolean = true
+    protected var mActiveTemp: Boolean = true
 
     constructor (status: String): this(){
         try {
             if (status.isNotBlank()) {
                 val statusArray = status.split(";")
-                temp = statusArray[0].toInt()
-                fan = statusArray[1].toInt()
-                mode = statusArray[2].toInt()
+                mTemp = statusArray[0].toInt()
+                mFan = statusArray[1].toInt()
+                mMode = statusArray[2].toInt()
             }
         } catch (exception: Exception) {
-            temp = 27
-            fan = 0
-            mode = 0
-            activeFan = true
-            activeTemp = true
+            mTemp = 27
+            mFan = 0
+            mMode = 0
+            mActiveFan = true
+            mActiveTemp = true
         }
     }
 
@@ -39,28 +39,34 @@ abstract class ACStatus (){
     }
 
     override fun toString(): String {
-        return "$temp;$fan;$mode"
+        return "$mTemp;$mFan;$mMode"
     }
 
     open fun setNextMode(){
-        mode++
-        if (mode > MODE_FAN) mode = MODE_AUTO
+        mMode++
+        if (mMode > MODE_FAN) mMode = MODE_AUTO
     }
 
     open fun setNextFan(){
-        fan++
-        if (fan > FAN_3) fan = FAN_AUTO
+        mFan++
+        if (mFan > FAN_3) mFan = FAN_AUTO
     }
 
     open fun plusTemp(){
-        temp++
+        mTemp++
     }
 
     open fun minusTemp(){
-        temp--
+        mTemp--
     }
 
-    fun isFanActive(): Boolean { return activeFan }
+    fun isFanActive(): Boolean { return mActiveFan }
 
-    fun isTempActive(): Boolean { return activeTemp }
+    fun isTempActive(): Boolean { return mActiveTemp }
+
+    fun getTemp(): Int { return mTemp }
+
+    fun getFan(): Int { return mFan }
+
+    fun getMode(): Int { return mMode }
 }

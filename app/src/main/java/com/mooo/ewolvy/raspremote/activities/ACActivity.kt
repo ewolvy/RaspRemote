@@ -87,7 +87,7 @@ class ACActivity : AppCompatActivity() {
 
     private fun updateTemp(){
         if (status.isTempActive()) {
-            textview_ac_temperature.text = status.temp.toString()
+            textview_ac_temperature.text = status.getTemp().toString()
         } else {
             textview_ac_temperature.text = getString(R.string.ac_inactive_temp)
         }
@@ -99,7 +99,7 @@ class ACActivity : AppCompatActivity() {
         textview_ac_dry_mode.visibility = View.INVISIBLE
         textview_ac_heat_mode.visibility = View.INVISIBLE
         textview_ac_fan_mode.visibility = View.INVISIBLE
-        when (status.mode){
+        when (status.getMode()){
             ACStatus.MODE_AUTO -> textview_ac_auto_mode.visibility = View.VISIBLE
             ACStatus.MODE_COOL -> textview_ac_cool_mode.visibility = View.VISIBLE
             ACStatus.MODE_DRY -> textview_ac_dry_mode.visibility = View.VISIBLE
@@ -114,7 +114,7 @@ class ACActivity : AppCompatActivity() {
         textview_ac_fan_level_3.visibility = View.INVISIBLE
         textview_ac_fan_level_auto.visibility = View.INVISIBLE
         textview_ac_fan_level_quiet.visibility = View.INVISIBLE
-        when (status.fan){
+        when (status.getFan()){
             ACStatus.FAN_AUTO -> textview_ac_fan_level_auto.visibility = View.VISIBLE
             ACStatus.FAN_1 -> textview_ac_fan_level_1.visibility = View.VISIBLE
             ACStatus.FAN_2 -> {

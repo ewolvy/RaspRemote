@@ -7,7 +7,7 @@ class ACGeneral(status: String) : ACStatus(status) {
     }
 
     override fun setNextFan() {
-        fan++
-        if (fan > FAN_QUIET) fan = FAN_AUTO
+        mFan++
+        if (mFan > FAN_QUIET) mFan = FAN_AUTO
     }
 }
