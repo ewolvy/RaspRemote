@@ -3,6 +3,8 @@ package com.mooo.ewolvy.raspremote.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import com.mooo.ewolvy.raspremote.CommandManager
 import com.mooo.ewolvy.raspremote.ac.ACStatus
 import com.mooo.ewolvy.raspremote.R
 import com.mooo.ewolvy.raspremote.ac.ACGeneral
@@ -44,14 +46,14 @@ class ACActivity : AppCompatActivity() {
         button_ac_temp_plus.setOnClickListener { doActionForButton(it.id) }
         button_ac_fan.setOnClickListener { doActionForButton(it.id) }
 
-        button_ac_send.setOnClickListener { doActionForButton(it.id) }
-        button_ac_on.setOnClickListener { doActionForButton(it.id) }
-        button_ac_off.setOnClickListener { doActionForButton(it.id) }
-        button_ac_swing.setOnClickListener { doActionForButton(it.id) }
+        button_ac_send.setOnClickListener { sendCommandForButton(it.id) }
+        button_ac_on.setOnClickListener { sendCommandForButton(it.id) }
+        button_ac_off.setOnClickListener { sendCommandForButton(it.id) }
+        button_ac_swing.setOnClickListener { sendCommandForButton(it.id) }
     }
 
-    private fun doActionForButton(button: Int){
-        when (button){
+    private fun doActionForButton(buttonId: Int){
+        when (buttonId){
             R.id.button_ac_mode -> {
                 status.setNextMode()
                 updateUI()
@@ -69,14 +71,30 @@ class ACActivity : AppCompatActivity() {
                 status.minusTemp()
                 updateTemp()
             }
-
-            /*
-            R.id.button_ac_send ->
-            R.id.button_ac_on ->
-            R.id.button_ac_off ->
-            R.id.button_ac_swing ->
-             */
         }
+    }
+
+    private fun sendCommandForButton(buttonId: Int){
+        val command = when (buttonId){
+            R.id.button_ac_send -> status.getCode()
+            R.id.button_ac_on -> status.getPowerOn()
+            R.id.button_ac_off -> status.getPowerOff()
+            R.id.button_ac_swing -> status.getSwing()
+
+            else -> "BUTTON_ID_ERROR"
+        }
+
+        CommandManager.sendCommand(
+            device.getFullAddress(),
+            device.username,
+            device.password,
+            device.certificateFile,
+            command,
+            this) { this.runOnUiThread {
+                Toast.makeText(this@ACActivity, it, Toast.LENGTH_LONG).show()
+            }
+        }
+
     }
 
     private fun updateUI(){
@@ -126,7 +144,7 @@ class ACActivity : AppCompatActivity() {
                 textview_ac_fan_level_2.visibility = View.VISIBLE
                 textview_ac_fan_level_3.visibility = View.VISIBLE
             }
-            ACGeneral.FAN_QUIET -> {
+            ACStatus.FAN_QUIET -> {
                 if (status is ACGeneral) textview_ac_fan_level_quiet.visibility = View.VISIBLE
             }
         }

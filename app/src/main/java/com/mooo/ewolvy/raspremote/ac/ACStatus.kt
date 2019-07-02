@@ -32,10 +32,27 @@ abstract class ACStatus (){
         const val MODE_HEAT = 3
         const val MODE_FAN = 4
 
+        val MODE_NAMES = mapOf(
+            0 to "AUTO_",
+            1 to "COOL_",
+            2 to "DRY_",
+            3 to "HEAT_",
+            4 to "FAN_"
+        )
+
         const val FAN_AUTO = 0
         const val FAN_1 = 1
         const val FAN_2 = 2
         const val FAN_3 = 3
+        const val FAN_QUIET = 4
+
+        val FAN_NAMES = mapOf(
+            0 to "AUTO_",
+            1 to "LOW_",
+            2 to "MED_",
+            3 to "HIGH_",
+            4 to "QUIET_"
+        )
     }
 
     override fun toString(): String {
@@ -48,8 +65,10 @@ abstract class ACStatus (){
     }
 
     open fun setNextFan(){
-        mFan++
-        if (mFan > FAN_3) mFan = FAN_AUTO
+        if (isFanActive()) {
+            mFan++
+            if (mFan > FAN_3) mFan = FAN_AUTO
+        }
     }
 
     open fun plusTemp(){
@@ -69,4 +88,20 @@ abstract class ACStatus (){
     fun getFan(): Int { return mFan }
 
     fun getMode(): Int { return mMode }
+
+    fun getCode(): String {
+        return "$MODE_NAMES[$mMode]$FAN_NAMES[$mFan]$mTemp"
+    }
+
+    open fun getPowerOn(): String {
+        return "POWER_ON"
+    }
+
+    open fun getPowerOff(): String {
+        return "POWER_OFF"
+    }
+
+    open fun getSwing(): String {
+        return "SWING"
+    }
 }

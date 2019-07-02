@@ -21,19 +21,12 @@ class PlugActivity : AppCompatActivity() {
         setContentView(R.layout.activity_plug)
 
         setupListeners()
+        textview_plug_name.text = device.name
     }
 
     private fun setupListeners(){
-        button_plug_1_on.setOnClickListener { doActionForButton(it.id) }
-        button_plug_1_off.setOnClickListener { doActionForButton(it.id) }
-        button_plug_2_on.setOnClickListener { doActionForButton(it.id) }
-        button_plug_2_off.setOnClickListener { doActionForButton(it.id) }
-        button_plug_3_on.setOnClickListener { doActionForButton(it.id) }
-        button_plug_3_off.setOnClickListener { doActionForButton(it.id) }
-        button_plug_4_on.setOnClickListener { doActionForButton(it.id) }
-        button_plug_4_off.setOnClickListener { doActionForButton(it.id) }
-        button_plug_all_on.setOnClickListener { doActionForButton(it.id) }
-        button_plug_all_off.setOnClickListener { doActionForButton(it.id) }
+        button_plug_on.setOnClickListener { doActionForButton(it.id) }
+        button_plug_off.setOnClickListener { doActionForButton(it.id) }
     }
 
     private fun doActionForButton (buttonId: Int){
@@ -57,16 +50,8 @@ class PlugActivity : AppCompatActivity() {
         }
 
         val command = when (buttonId){
-            R.id.button_plug_1_on ->  "1_ON"
-            R.id.button_plug_1_off ->  "1_OFF"
-            R.id.button_plug_2_on -> "2_ON"
-            R.id.button_plug_2_off -> "2_OFF"
-            R.id.button_plug_3_on -> "3_ON"
-            R.id.button_plug_3_off -> "3_OFF"
-            R.id.button_plug_4_on -> "4_ON"
-            R.id.button_plug_4_off -> "4_OFF"
-            R.id.button_plug_all_on -> "ALL_ON"
-            R.id.button_plug_all_off -> "ALL_OFF"
+            R.id.button_plug_on ->  "ON"
+            R.id.button_plug_off ->  "OFF"
             else -> "BUTTON_ID_ERROR"
         }
 

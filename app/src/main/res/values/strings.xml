@@ -62,11 +62,6 @@
     <string name="dialog_ok">OK</string>
     <string name="plug_on">On</string>
     <string name="plug_off">Off</string>
-    <string name="plug_1" translatable="false">1</string>
-    <string name="plug_2" translatable="false">2</string>
-    <string name="plug_3" translatable="false">3</string>
-    <string name="plug_4" translatable="false">4</string>
-    <string name="plug_all">All</string>
     <string name="lamp_power_button">Power button</string>
     <string name="lamp_night_button">Night mode</string>
     <string name="lamp_less_bright">Less bright</string>
