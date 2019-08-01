@@ -1,5 +1,7 @@
 package com.mooo.ewolvy.raspremote.ac
 
+import android.util.Log
+
 abstract class ACStatus (){
 
     protected var mTemp: Int = 27
@@ -8,13 +10,18 @@ abstract class ACStatus (){
     protected var mActiveFan: Boolean = true
     protected var mActiveTemp: Boolean = true
 
+    protected val mTag = "ACStatus"
+
+    protected abstract val mMaxTemp: Int
+    protected abstract val mMinTemp: Int
+
     constructor (status: String): this(){
         try {
             if (status.isNotBlank()) {
                 val statusArray = status.split(";")
-                mTemp = statusArray[0].toInt()
+                mMode = statusArray[0].toInt()
                 mFan = statusArray[1].toInt()
-                mMode = statusArray[2].toInt()
+                mTemp = statusArray[2].toInt()
             }
         } catch (exception: Exception) {
             mTemp = 27
@@ -22,6 +29,7 @@ abstract class ACStatus (){
             mMode = 0
             mActiveFan = true
             mActiveTemp = true
+            Log.d(mTag, "The saved status is invalid: ${exception.message}")
         }
     }
 
@@ -33,11 +41,11 @@ abstract class ACStatus (){
         const val MODE_FAN = 4
 
         val MODE_NAMES = mapOf(
-            0 to "AUTO_",
-            1 to "COOL_",
-            2 to "DRY_",
-            3 to "HEAT_",
-            4 to "FAN_"
+            MODE_AUTO to "AUTO_",
+            MODE_COOL to "COOL_",
+            MODE_DRY to "DRY_",
+            MODE_HEAT to "HEAT_",
+            MODE_FAN to "FAN_"
         )
 
         const val FAN_AUTO = 0
@@ -47,21 +55,33 @@ abstract class ACStatus (){
         const val FAN_QUIET = 4
 
         val FAN_NAMES = mapOf(
-            0 to "AUTO_",
-            1 to "LOW_",
-            2 to "MED_",
-            3 to "HIGH_",
-            4 to "QUIET_"
+            FAN_AUTO to "AUTO_",
+            FAN_1 to "LOW_",
+            FAN_2 to "MED_",
+            FAN_3 to "HIGH_",
+            FAN_QUIET to "QUIET_"
         )
     }
 
     override fun toString(): String {
-        return "$mTemp;$mFan;$mMode"
+        return "$mMode;$mFan;$mTemp"
     }
+
+    abstract fun isValidState(): Boolean
 
     open fun setNextMode(){
         mMode++
         if (mMode > MODE_FAN) mMode = MODE_AUTO
+        when (mMode){
+            MODE_AUTO -> {
+                mActiveFan = false
+                mActiveTemp = true
+            }
+            MODE_COOL -> mActiveFan = true
+            MODE_DRY -> mActiveFan = false
+            MODE_HEAT -> mActiveFan = true
+            MODE_FAN -> mActiveTemp = false
+        }
     }
 
     open fun setNextFan(){
@@ -71,12 +91,14 @@ abstract class ACStatus (){
         }
     }
 
-    open fun plusTemp(){
-        mTemp++
+    fun plusTemp(){
+        if (mActiveTemp) mTemp =
+            if (mTemp == mMaxTemp) mMaxTemp else mTemp + 1
     }
 
-    open fun minusTemp(){
-        mTemp--
+    fun minusTemp(){
+        if (mActiveTemp) mTemp =
+            if (mTemp == mMinTemp) mMinTemp else mTemp - 1
     }
 
     fun isFanActive(): Boolean { return mActiveFan }
