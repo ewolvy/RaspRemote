@@ -9,7 +9,6 @@ import com.mooo.ewolvy.raspremote.ac.ACStatus
 import com.mooo.ewolvy.raspremote.R
 import com.mooo.ewolvy.raspremote.ac.ACGeneral
 import com.mooo.ewolvy.raspremote.ac.ACKaysun
-import com.mooo.ewolvy.raspremote.ac.ACProKlima
 import com.mooo.ewolvy.raspremote.database.Device
 import kotlinx.android.synthetic.main.ac_buttons.*
 import kotlinx.android.synthetic.main.ac_display.*
@@ -34,7 +33,7 @@ class ACActivity : AppCompatActivity() {
     private fun getStatus (device: Device): ACStatus{
         return when (device.type){
             Device.TYPE_AC_KAYSUN -> ACKaysun(device.currentState)
-            Device.TYPE_AC_PROKLIMA -> ACProKlima(device.currentState)
+            //Device.TYPE_AC_PROKLIMA -> ACProKlima(device.currentState)
             Device.TYPE_AC_GENERAL -> ACGeneral(device.currentState)
             else -> ACKaysun(device.currentState)
         }
@@ -84,6 +83,8 @@ class ACActivity : AppCompatActivity() {
             else -> "BUTTON_ID_ERROR"
         }
 
+        if (buttonId == R.id.button_ac_swing) updateSwing()
+
         CommandManager.sendCommand(
             device.getFullAddress(),
             device.username,
@@ -101,6 +102,7 @@ class ACActivity : AppCompatActivity() {
         updateTemp()
         updateMode()
         updateFan()
+        updateSwing()
     }
 
     private fun updateTemp(){
@@ -148,5 +150,9 @@ class ACActivity : AppCompatActivity() {
                 if (status is ACGeneral) textview_ac_fan_level_quiet.visibility = View.VISIBLE
             }
         }
+    }
+
+    private fun updateSwing(){
+        iv_ac_swing_icon.visibility = if (status.isSwingActive()) View.VISIBLE else View.INVISIBLE
     }
 }

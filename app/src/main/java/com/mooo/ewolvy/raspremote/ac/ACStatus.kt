@@ -9,6 +9,7 @@ abstract class ACStatus (){
     protected var mMode: Int = 0
     protected var mActiveFan: Boolean = true
     protected var mActiveTemp: Boolean = true
+    protected var mActiveSwing: Boolean = false
 
     protected val mTag = "ACStatus"
 
@@ -22,6 +23,7 @@ abstract class ACStatus (){
                 mMode = statusArray[0].toInt()
                 mFan = statusArray[1].toInt()
                 mTemp = statusArray[2].toInt()
+                mActiveSwing = statusArray[3].toBoolean()
             }
         } catch (exception: Exception) {
             mTemp = 27
@@ -29,6 +31,7 @@ abstract class ACStatus (){
             mMode = 0
             mActiveFan = true
             mActiveTemp = true
+            mActiveSwing = false
             Log.d(mTag, "The saved status is invalid: ${exception.message}")
         }
     }
@@ -64,7 +67,7 @@ abstract class ACStatus (){
     }
 
     override fun toString(): String {
-        return "$mMode;$mFan;$mTemp"
+        return "$mMode;$mFan;$mTemp;$mActiveSwing"
     }
 
     abstract fun isValidState(): Boolean
@@ -105,14 +108,16 @@ abstract class ACStatus (){
 
     fun isTempActive(): Boolean { return mActiveTemp }
 
+    fun isSwingActive(): Boolean { return mActiveSwing }
+
     fun getTemp(): Int { return mTemp }
 
     fun getFan(): Int { return mFan }
 
     fun getMode(): Int { return mMode }
 
-    fun getCode(): String {
-        return "$MODE_NAMES[$mMode]$FAN_NAMES[$mFan]$mTemp"
+    open fun getCode(): String {
+        return "${MODE_NAMES[mMode]}${FAN_NAMES[mFan]}$mTemp"
     }
 
     open fun getPowerOn(): String {

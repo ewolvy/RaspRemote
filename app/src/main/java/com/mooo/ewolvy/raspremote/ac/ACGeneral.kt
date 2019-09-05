@@ -39,4 +39,18 @@ class ACGeneral(status: String) : ACStatus(status) {
             if (mFan > FAN_QUIET) mFan = FAN_AUTO
         }
     }
+
+    override fun getCode(): String {
+        return if (isSwingActive()) "${MODE_NAMES[mMode]}${FAN_NAMES[mFan]}$mTemp${"_SWING"}"
+        else super.getCode()
+    }
+
+    override fun getPowerOn(): String {
+        return "${getCode()}_POWER"
+    }
+
+    override fun getSwing(): String {
+        mActiveSwing = !mActiveSwing
+        return getCode()
+    }
 }
