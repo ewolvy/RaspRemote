@@ -20,6 +20,7 @@ class PlugActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_plug)
 
+        title = "${this.getString(this.applicationInfo.labelRes)}: ${device.name}"
         setupListeners()
         textview_plug_name.text = device.name
     }

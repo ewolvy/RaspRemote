@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import com.mooo.ewolvy.raspremote.CommandManager
+import com.mooo.ewolvy.raspremote.DeviceVM
 import com.mooo.ewolvy.raspremote.ac.ACStatus
 import com.mooo.ewolvy.raspremote.R
 import com.mooo.ewolvy.raspremote.ac.ACGeneral
@@ -18,12 +20,24 @@ class ACActivity : AppCompatActivity() {
     private val device: Device by lazy { getDevice(intent.extras) }
     private val status: ACStatus by lazy { getStatus(device) }
 
+    private lateinit var deviceVM: DeviceVM
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_ac)
 
+        deviceVM = ViewModelProviders.of(this).get(DeviceVM::class.java)
+        title = "${this.getString(this.applicationInfo.labelRes)}: ${device.name}"
         setupListeners()
         updateUI()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (device.currentState != status.toString()) {
+            device.currentState = status.toString()
+            deviceVM.updateDevice(device)
+        }
     }
 
     private fun getDevice (extras: Bundle?): Device{

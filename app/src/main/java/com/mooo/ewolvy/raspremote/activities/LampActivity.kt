@@ -20,6 +20,7 @@ class LampActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lamp)
 
+        title = "${this.getString(this.applicationInfo.labelRes)}: ${device.name}"
         setupListeners()
     }
 
@@ -62,19 +63,19 @@ class LampActivity : AppCompatActivity() {
 
         val command = when (buttonId){
             R.id.ib_lamp_power -> "POWER"
-            R.id.ib_lamp_music -> "MUSIC"
+            R.id.ib_lamp_music -> "BLUETOOTH"
             R.id.ib_lamp_night -> "NIGHT"
 
-            R.id.ib_lamp_less_bright -> "LESS_BRIGHT"
-            R.id.ib_lamp_more_bright -> "MORE BRIGHT"
+            R.id.ib_lamp_less_bright -> "BRIGHTMINUS"
+            R.id.ib_lamp_more_bright -> "BRIGHTPLUS"
 
-            R.id.ib_lamp_warmer -> "WARMER"
-            R.id.ib_lamp_cooler -> "COOLER"
+            R.id.ib_lamp_warmer -> "COLORMINUS"
+            R.id.ib_lamp_cooler -> "COLORPLUS"
 
-            R.id.ib_lamp_bright_25 -> "25%"
-            R.id.ib_lamp_bright_50 -> "50%"
-            R.id.ib_lamp_bright_75 -> "75%"
-            R.id.ib_lamp_bright_100 -> "100%"
+            R.id.ib_lamp_bright_25 -> "PERCENT25"
+            R.id.ib_lamp_bright_50 -> "PERCENT50"
+            R.id.ib_lamp_bright_75 -> "PERCENT75"
+            R.id.ib_lamp_bright_100 -> "PERCENT100"
 
             else -> "BUTTON_ID_ERROR"
         }

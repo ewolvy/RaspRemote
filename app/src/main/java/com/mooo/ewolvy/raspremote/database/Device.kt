@@ -19,7 +19,7 @@ data class Device (
     val alias: String = "",
     val certificateFile: Uri = Uri.EMPTY,
     var position: Int = 0,
-    val currentState: String = "") : Parcelable{
+    var currentState: String = "") : Parcelable{
 
     companion object{
         const val TYPE_AC_KAYSUN = 0
