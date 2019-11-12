@@ -92,10 +92,10 @@ class EditItemActivity : AppCompatActivity() {
                 edit_root_layout,
                 R.string.edit_error_empty_alias,
                 Snackbar.LENGTH_LONG).show()
-            edit_certificate_text.text.isEmpty() -> Snackbar.make(
-                edit_root_layout,
-                R.string.edit_error_empty_certificate,
-                Snackbar.LENGTH_LONG).show()
+//            edit_certificate_text.text.isEmpty() -> Snackbar.make(
+//                edit_root_layout,
+//                R.string.edit_error_empty_certificate,
+//                Snackbar.LENGTH_LONG).show()
             // If there is no error, offer the user to save changes and exit
             else -> {
                 val builder = AlertDialog.Builder(this@EditItemActivity)

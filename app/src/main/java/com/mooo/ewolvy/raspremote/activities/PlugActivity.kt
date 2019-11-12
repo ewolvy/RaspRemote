@@ -60,9 +60,7 @@ class PlugActivity : AppCompatActivity() {
             device.getFullAddress(),
             device.username,
             device.password,
-            device.certificateFile,
-            command,
-            this) { this.runOnUiThread {
+            command) { this.runOnUiThread {
                     Toast.makeText(this@PlugActivity, it, Toast.LENGTH_LONG).show()
                 }
         }

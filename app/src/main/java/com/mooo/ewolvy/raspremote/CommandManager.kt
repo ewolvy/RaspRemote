@@ -8,13 +8,14 @@ object CommandManager {
     fun sendCommand (address: String,
                      username: String,
                      password: String,
-                     certificate: Uri,
+//                     certificate: Uri,
                      command: String,
-                     context: Context,
+//                     context: Context,
                      callback: (String) -> Unit){
         val fullAddress = "$address$command"
         GlobalScope.launch {
-            val response = SSLConnection.connect(fullAddress, username, password, certificate, context)
+//            val response = SSLConnection.connect(fullAddress, username, password, certificate, context)
+            val response = SSLConnection.easyConnect(fullAddress, username, password)
             callback (response)
         }
     }

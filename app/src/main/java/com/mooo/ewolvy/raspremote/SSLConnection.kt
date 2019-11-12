@@ -125,4 +125,33 @@ object SSLConnection {
         Log.d(TAG, "Response: $jsonResponse")
         return jsonResponse
     }
+
+    fun easyConnect(urlAddress: String, username: String, password: String): String {
+        var jsonResponse = ""
+        val urlConnection = URL(urlAddress).openConnection() as HttpsURLConnection
+        val userCredentials = "$username:$password"
+        val basicAuth = "Basic " + Base64.encodeToString(userCredentials.toByteArray(), 0)
+        try {
+            urlConnection.readTimeout = 10000
+            urlConnection.connectTimeout = 15000
+            urlConnection.requestMethod = "GET"
+            urlConnection.addRequestProperty("Authorization", basicAuth)
+            urlConnection.connect()
+            if (urlConnection.responseCode == 200) {
+                val inputStream = urlConnection.inputStream
+                try {
+                    jsonResponse = readFromStream(inputStream)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                    Log.e(TAG, "IO Exception reading from stream: $e")
+                }
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "IO Exception connection to URL: $e")
+        }
+        Log.d(TAG, "Response: $jsonResponse")
+
+        return jsonResponse
+
+    }
 }
