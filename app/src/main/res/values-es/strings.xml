@@ -32,6 +32,7 @@
         <item>AA - General</item>
         <item>Lámpara</item>
         <item>Enchufe inteligente</item>
+        <item>Datos de sensores</item>
     </string-array>
     <string name="menu_edit_save">Guardar</string>
     <string name="menu_edit_discard">Descartar</string>

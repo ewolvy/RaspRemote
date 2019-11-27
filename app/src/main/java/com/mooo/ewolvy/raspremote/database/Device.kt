@@ -27,6 +27,7 @@ data class Device (
         const val TYPE_AC_GENERAL = 2
         const val TYPE_LAMP = 3
         const val TYPE_PLUG = 4
+        const val TYPE_SENSOR = 5
     }
 
     fun getFullAddress(): String {

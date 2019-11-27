@@ -13,11 +13,8 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.mooo.ewolvy.raspremote.activities.ACActivity
-import com.mooo.ewolvy.raspremote.activities.EditItemActivity
-import com.mooo.ewolvy.raspremote.activities.LampActivity
+import com.mooo.ewolvy.raspremote.activities.*
 import com.mooo.ewolvy.raspremote.database.Device
-import com.mooo.ewolvy.raspremote.activities.PlugActivity
 import kotlinx.android.synthetic.main.main_item.view.*
 import java.util.*
 
@@ -80,6 +77,7 @@ class DeviceListAdapter internal constructor(
             Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA, Device.TYPE_AC_GENERAL -> R.drawable.ic_air_conditioning
             Device.TYPE_LAMP -> R.drawable.ic_ceiling_lamp
             Device.TYPE_PLUG -> R.drawable.ic_wireless_plug
+            Device.TYPE_SENSOR -> R.drawable.ic_sensor_data
             else -> R.drawable.ic_question_mark
         })
 
@@ -96,7 +94,8 @@ class DeviceListAdapter internal constructor(
             val intent = when (current.type){
                 Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA, Device.TYPE_AC_GENERAL -> Intent(context, ACActivity::class.java)
                 Device.TYPE_PLUG -> Intent(context, PlugActivity::class.java)
-                else -> Intent(context, LampActivity::class.java)
+                Device.TYPE_PLUG-> Intent(context, LampActivity::class.java)
+                else -> Intent(context, SensorActivity::class.java)
             }
             val extras = Bundle()
             extras.putParcelable("DEVICE", current)
