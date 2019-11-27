@@ -28,13 +28,12 @@ class SensorActivity : AppCompatActivity() {
         val yAXESsin: ArrayList<Entry> = ArrayList()
         val yAXEScos: ArrayList<Entry> = ArrayList()
         var x = 0.0
-//        var numDataPoints = 1000
         for(i in 1..1000){
             val sinFunction = sin(x).toString().toFloat()
             val cosFunction = cos(x).toString().toFloat()
             x += 0.1
-            yAXESsin.add(Entry(sinFunction, i.toFloat()))
-            yAXEScos.add(Entry(cosFunction, i.toFloat()))
+            yAXESsin.add(Entry(i.toFloat(), sinFunction))
+            yAXEScos.add(Entry(i.toFloat(), cosFunction))
             xAXES.add(x.toString())
         }
         val xaxes = arrayOfNulls<String>(xAXES.size)
@@ -55,7 +54,7 @@ class SensorActivity : AppCompatActivity() {
         lineDataSets.add(lineDataSet1)
         lineDataSets.add(lineDataSet2)
 
-        linechart_sensor_chart.data = LineData(lineDataSets, xaxes)
+        linechart_sensor_chart.data = LineData(lineDataSets)
 
         linechart_sensor_chart.setVisibleXRangeMaximum(65f)
     }
