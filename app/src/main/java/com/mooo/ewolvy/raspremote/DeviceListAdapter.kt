@@ -93,8 +93,8 @@ class DeviceListAdapter internal constructor(
         holder.deviceItemContainer.setOnClickListener{
             val intent = when (current.type){
                 Device.TYPE_AC_KAYSUN, Device.TYPE_AC_PROKLIMA, Device.TYPE_AC_GENERAL -> Intent(context, ACActivity::class.java)
+                Device.TYPE_LAMP -> Intent(context, LampActivity::class.java)
                 Device.TYPE_PLUG -> Intent(context, PlugActivity::class.java)
-                Device.TYPE_PLUG-> Intent(context, LampActivity::class.java)
                 else -> Intent(context, SensorActivity::class.java)
             }
             val extras = Bundle()
