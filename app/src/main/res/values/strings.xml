@@ -95,4 +95,6 @@
     <string name="ac_inactive_temp" translatable="false">--</string>
     <string name="ac_quiet">Quiet</string>
     <string name="ac_swing_icon_description">Swing icon</string>
+    <string name="response_ok">👌</string>
+    <string name="response_fail">👎</string>
 </resources>

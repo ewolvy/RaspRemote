@@ -144,10 +144,14 @@ object SSLConnection {
                 } catch (e: IOException) {
                     e.printStackTrace()
                     Log.e(TAG, "IO Exception reading from stream: $e")
+                    return e.message ?: "ERROR"
                 }
+            } else {
+                return urlConnection.responseMessage
             }
         } catch (e: IOException) {
             Log.e(TAG, "IO Exception connection to URL: $e")
+            return e.message ?: "ERROR"
         }
         Log.d(TAG, "Response: $jsonResponse")
 

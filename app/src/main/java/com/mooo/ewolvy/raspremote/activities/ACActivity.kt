@@ -3,6 +3,8 @@ package com.mooo.ewolvy.raspremote.activities
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import com.mooo.ewolvy.raspremote.CommandManager
@@ -104,7 +106,16 @@ class ACActivity : AppCompatActivity() {
             device.username,
             device.password,
             command) { this.runOnUiThread {
-                Toast.makeText(this@ACActivity, it, Toast.LENGTH_LONG).show()
+                val toastMessage = if (it[it.lastIndex - 3] == '0'){
+                    getString(R.string.response_ok)
+                } else {
+                    getString(R.string.response_fail)
+                }
+                val toast: Toast = Toast.makeText(this@ACActivity, toastMessage, Toast.LENGTH_LONG)
+                val toastLayout = toast.view as LinearLayout
+                val toastTV = toastLayout.getChildAt(0) as TextView
+                toastTV.textSize = 40f
+                toast.show()
             }
         }
 

@@ -4,6 +4,8 @@ import android.Manifest
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -85,7 +87,16 @@ class LampActivity : AppCompatActivity() {
             device.username,
             device.password,
             command) { this.runOnUiThread {
-                Toast.makeText(this@LampActivity, it, Toast.LENGTH_LONG).show()
+                val toastMessage = if (it[it.lastIndex - 3] == '0'){
+                    getString(R.string.response_ok)
+                } else {
+                    getString(R.string.response_fail)
+                }
+                val toast: Toast = Toast.makeText(this@LampActivity, toastMessage, Toast.LENGTH_LONG)
+                val toastLayout = toast.view as LinearLayout
+                val toastTV = toastLayout.getChildAt(0) as TextView
+                toastTV.textSize = 40f
+                toast.show()
             }
         }
     }
