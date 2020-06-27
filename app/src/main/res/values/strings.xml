@@ -32,7 +32,7 @@
     <string name="settings_selected_file">"Selected file: "</string>
     <string name="settings_name_label">Name</string>
     <string name="settings_type_label">Type</string>
-    <string name="settings_alias_label">Alias</string>
+    <string name="settings_params_label">Parameters</string>
     <string name="settings_certificate_button">Choose file…</string>
     <string name="settings_editAA">Edit air conditioner</string>
     <string-array name="settings_array_types">
@@ -56,7 +56,7 @@
     <string name="edit_error_invalid_port">The port number must be between 1 and 65535</string>
     <string name="edit_error_empty_username">You must specify the username</string>
     <string name="edit_error_empty_password">You must specify the password</string>
-    <string name="edit_error_empty_alias">You must specify the alias</string>
+    <string name="edit_error_empty_device">You must specify the device</string>
     <string name="edit_error_empty_certificate">You must select the certificate file</string>
     <string name="menu_main_add_fake_data">Add fake data</string>
     <string name="item_edit_description">Icon to edit the item</string>
@@ -97,4 +97,5 @@
     <string name="ac_swing_icon_description">Swing icon</string>
     <string name="response_ok">👌</string>
     <string name="response_fail">👎</string>
+    <string name="settings_path_label">Path</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.mooo.ewolvy.raspremote.database
 
-import android.net.Uri
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,10 +13,10 @@ data class Device (
     val type: Int = 0,
     val server: String = "",
     val port: Int = 0,
+    val path: String = "",
     val username: String = "",
     val password: String = "",
-    val alias: String = "",
-    val certificateFile: Uri = Uri.EMPTY,
+    val params: String = "",
     var position: Int = 0,
     var currentState: String = "") : Parcelable{
 
@@ -31,6 +30,15 @@ data class Device (
     }
 
     fun getFullAddress(): String {
-        return "$server:$port/$alias/"
+        return when (type) {
+            TYPE_AC_GENERAL,
+            TYPE_AC_KAYSUN,
+            TYPE_AC_PROKLIMA -> "$server:$port/$path?device=$params&command="
+
+            TYPE_PLUG,
+            TYPE_LAMP -> "$server:$port/$path?command="
+
+            else -> "$server:$port/$path"
+        }
     }
 }

@@ -53,8 +53,8 @@ class PlugActivity : AppCompatActivity() {
         }
 
         val command = when (buttonId){
-            R.id.button_plug_on ->  "ON"
-            R.id.button_plug_off ->  "OFF"
+            R.id.button_plug_on ->  device.params.split("|")[0]
+            R.id.button_plug_off ->  device.params.split("|")[1]
             else -> "BUTTON_ID_ERROR"
         }
 

@@ -68,7 +68,7 @@ class DeviceListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: DeviceViewHolder, position: Int) {
         val current = devices[position]
-        val linkText = "${current.server}:${current.port}/${current.alias}"
+        val linkText = "${current.server}:${current.port}/${current.path}"
 
         holder.deviceNameItemView.text = current.name
         holder.deviceLinkItemView.text = linkText

@@ -2,7 +2,6 @@ package com.mooo.ewolvy.raspremote.activities
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -26,7 +25,6 @@ class EditItemActivity : AppCompatActivity() {
         const val EXTRA_DEVICE = "EXTRA_DEVICE"
 
         const val REQUEST_CODE_BCD = 3
-//        const val REQUEST_CODE_FC = 4
         const val MY_TIMEOUT = 5000L
         const val BCD_SERVER_PORT = 19103
         const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
@@ -37,7 +35,6 @@ class EditItemActivity : AppCompatActivity() {
 
     private val purpose: Int by lazy {getPurpose(intent.extras)}
     private val device: Device by lazy {getDevice(intent.extras)}
-    private var certificateUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,14 +85,11 @@ class EditItemActivity : AppCompatActivity() {
                 edit_root_layout,
                 R.string.edit_error_empty_password,
                 Snackbar.LENGTH_LONG).show()
-            edit_alias.text.isEmpty() -> Snackbar.make(
+            edit_params.text.isEmpty() -> Snackbar.make(
                 edit_root_layout,
-                R.string.edit_error_empty_alias,
+                R.string.edit_error_empty_device,
                 Snackbar.LENGTH_LONG).show()
-//            edit_certificate_text.text.isEmpty() -> Snackbar.make(
-//                edit_root_layout,
-//                R.string.edit_error_empty_certificate,
-//                Snackbar.LENGTH_LONG).show()
+
             // If there is no error, offer the user to save changes and exit
             else -> {
                 val builder = AlertDialog.Builder(this@EditItemActivity)
@@ -108,10 +102,10 @@ class EditItemActivity : AppCompatActivity() {
                             edit_type.selectedItemPosition,
                             edit_server.text.toString(),
                             edit_port.text.toString().toInt(),
+                            edit_path.text.toString(),
                             edit_username.text.toString(),
                             edit_password.text.toString(),
-                            edit_alias.text.toString(),
-                            certificateUri ?: device.certificateFile,
+                            edit_params.text.toString(),
                             device.position,  // will manage the correct order on the calling activity when creating / updating the device on the database
                             device.currentState)
                         val replyIntent = Intent()
@@ -160,32 +154,14 @@ class EditItemActivity : AppCompatActivity() {
         edit_port.setText(device.port.toString())
         edit_username.setText(device.username)
         edit_password.setText(device.password)
-        edit_alias.setText(device.alias)
-//        device.certificateFile.path?.let {
-//            edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
-//        }
+        edit_params.setText(device.params)
     }
 
     private fun setButtonListeners(){
-//        edit_certificate_button.setOnClickListener{
-//            startFileChooser()
-//        }
-
         fab_edit.setOnClickListener {
             startBroadcastDiscoveryActivity()
         }
     }
-
-//    private fun startFileChooser(){
-//        val intent = Intent()
-//            .setType("*/*")
-//            .setAction(Intent.ACTION_OPEN_DOCUMENT)
-//            .addCategory(Intent.CATEGORY_OPENABLE)
-//
-//        startActivityForResult(Intent.createChooser(intent, "Select a file"),
-//            REQUEST_CODE_FC
-//        )
-//    }
 
     private fun startBroadcastDiscoveryActivity(){
         val intent = Intent(this@EditItemActivity, BroadcastDiscoveryActivity::class.java)
@@ -220,7 +196,8 @@ class EditItemActivity : AppCompatActivity() {
                     edit_type.setSelection(jsonData.getInt("Type"))
                     edit_server.setText(jsonData.getString("Address"))
                     edit_port.setText(jsonData.getString("Port"))
-                    edit_alias.setText(jsonData.getString("Alias"))
+                    edit_path.setText(jsonData.getString("Path"))
+                    edit_params.setText(jsonData.getString("Params"))
                 } else if (resultCode == RESULT_CANCELED) {
                     val error = data?.getSerializableExtra(BroadcastDiscoveryActivity.EXTRA_ERROR_CODE) as FetchDataErrorStatus? ?: FetchDataErrorStatus.UNKNOWN_ERROR
                     Snackbar.make(
@@ -229,13 +206,6 @@ class EditItemActivity : AppCompatActivity() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-//            REQUEST_CODE_FC ->
-//                if (resultCode == Activity.RESULT_OK) {
-//                    certificateUri = data?.data
-//                    certificateUri?.path?.let{
-//                        edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
-//                    }
-//                }
             else -> Log.d(EDIT_TAG, "Unexpected activity returned some result!!!")
         }
     }

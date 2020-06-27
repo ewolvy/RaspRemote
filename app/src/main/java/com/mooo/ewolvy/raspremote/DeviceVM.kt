@@ -7,7 +7,6 @@ import com.mooo.ewolvy.raspremote.database.Device
 import com.mooo.ewolvy.raspremote.database.DeviceRepository
 import com.mooo.ewolvy.raspremote.database.DeviceRoomDB
 import kotlinx.coroutines.*
-import kotlinx.coroutines.android.Main
 import kotlin.coroutines.CoroutineContext
 
 class DeviceVM (application: Application) : AndroidViewModel(application) {

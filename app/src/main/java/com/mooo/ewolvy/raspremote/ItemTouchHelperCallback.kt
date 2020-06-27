@@ -3,6 +3,7 @@ package com.mooo.ewolvy.raspremote
 import android.graphics.Canvas
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.abs
 
 class ItemTouchHelperCallback(private val viewModel: DeviceVM, private val dragColor: Int, private val idleColor: Int) : ItemTouchHelper.SimpleCallback(
     ItemTouchHelper.UP or ItemTouchHelper.DOWN,
@@ -38,7 +39,7 @@ class ItemTouchHelperCallback(private val viewModel: DeviceVM, private val dragC
         // Progressive faint on delete gesture
         if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
             val width = viewHolder.itemView.width.toFloat()
-            val alpha = 1.0f - Math.abs(dX) / width
+            val alpha = 1.0f - abs(dX) / width
             viewHolder.itemView.alpha = alpha
             viewHolder.itemView.translationX = dX
         } else {

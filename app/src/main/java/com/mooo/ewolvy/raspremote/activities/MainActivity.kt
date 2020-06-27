@@ -3,7 +3,6 @@ package com.mooo.ewolvy.raspremote.activities
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.menu_main_item_about -> showAbout()
             R.id.menu_main_add_fake_data -> addFakeData()
         }
@@ -145,10 +144,10 @@ class MainActivity : AppCompatActivity() {
             Device.TYPE_AC_GENERAL,
             "https://ewolvy.mooo.com",
             1207,
+            "/domo/ir",
             "juanjo",
             "m4ndr4k3",
             "AAKaysun",
-            Uri.EMPTY,
             0,
             ""
         )
@@ -162,10 +161,10 @@ class MainActivity : AppCompatActivity() {
             Device.TYPE_LAMP,
             "https://ewolvy.mooo.com",
             2106,
+            "/rf",
             "juanjo",
             "m4ndr4k3",
             "Lamp",
-            Uri.EMPTY,
             1,
             ""
         )
@@ -179,10 +178,10 @@ class MainActivity : AppCompatActivity() {
             Device.TYPE_PLUG,
             "https://ewolvy.mooo.com",
             2106,
+            "/rf",
             "juanjo",
             "m4ndr4k3",
             "Estufa",
-            Uri.EMPTY,
             2,
             ""
         )

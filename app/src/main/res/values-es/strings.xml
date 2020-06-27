@@ -23,7 +23,7 @@
     <string name="settings_selected_file">"Archivo seleccionado: "</string>
     <string name="settings_name_label">Nombre</string>
     <string name="settings_type_label">Tipo</string>
-    <string name="settings_alias_label">Alias</string>
+    <string name="settings_params_label">Parámetros</string>
     <string name="settings_certificate_button">Elegir archivo…</string>
     <string name="settings_editAA">Editar aire acondicionado</string>
     <string-array name="settings_array_types">
@@ -46,7 +46,7 @@
     <string name="edit_error_invalid_port">El puerto debe estar entre 1 y 65535</string>
     <string name="edit_error_empty_username">Debes especificar el nombre de usuario</string>
     <string name="edit_error_empty_password">Debes especificar la contraseña</string>
-    <string name="edit_error_empty_alias">Debes especificar el alias</string>
+    <string name="edit_error_empty_device">Debes especificar el dispositivo</string>
     <string name="edit_error_empty_certificate">Debes seleccionar el archivo de certificado</string>
     <string name="menu_main_add_fake_data">Añadir datos falsos</string>
     <string name="item_edit_description">Icono para editar el elemento</string>
@@ -81,5 +81,6 @@
     <string name="ac_swing_icon_description">Icono de swing</string>
     <string name="response_ok">👌</string>
     <string name="response_fail">👎</string>
+    <string name="settings_path_label">Ruta</string>
 
 </resources>
