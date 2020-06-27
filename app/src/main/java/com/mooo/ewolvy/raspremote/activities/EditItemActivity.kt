@@ -26,7 +26,7 @@ class EditItemActivity : AppCompatActivity() {
         const val EXTRA_DEVICE = "EXTRA_DEVICE"
 
         const val REQUEST_CODE_BCD = 3
-        const val REQUEST_CODE_FC = 4
+//        const val REQUEST_CODE_FC = 4
         const val MY_TIMEOUT = 5000L
         const val BCD_SERVER_PORT = 19103
         const val SERVICE_REQUESTED = "BROADCAST_RASPREMOTE"
@@ -61,7 +61,7 @@ class EditItemActivity : AppCompatActivity() {
         when (item?.itemId) {
             R.id.menu_edit_save -> saveAndExit()
             R.id.menu_edit_cancel -> cancelAndExit()
-            else -> return super.onOptionsItemSelected(item)
+            else -> return super.onOptionsItemSelected(item!!)
         }
         return true
     }
@@ -161,31 +161,31 @@ class EditItemActivity : AppCompatActivity() {
         edit_username.setText(device.username)
         edit_password.setText(device.password)
         edit_alias.setText(device.alias)
-        device.certificateFile.path?.let {
-            edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
-        }
+//        device.certificateFile.path?.let {
+//            edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
+//        }
     }
 
     private fun setButtonListeners(){
-        edit_certificate_button.setOnClickListener{
-            startFileChooser()
-        }
+//        edit_certificate_button.setOnClickListener{
+//            startFileChooser()
+//        }
 
         fab_edit.setOnClickListener {
             startBroadcastDiscoveryActivity()
         }
     }
 
-    private fun startFileChooser(){
-        val intent = Intent()
-            .setType("*/*")
-            .setAction(Intent.ACTION_OPEN_DOCUMENT)
-            .addCategory(Intent.CATEGORY_OPENABLE)
-
-        startActivityForResult(Intent.createChooser(intent, "Select a file"),
-            REQUEST_CODE_FC
-        )
-    }
+//    private fun startFileChooser(){
+//        val intent = Intent()
+//            .setType("*/*")
+//            .setAction(Intent.ACTION_OPEN_DOCUMENT)
+//            .addCategory(Intent.CATEGORY_OPENABLE)
+//
+//        startActivityForResult(Intent.createChooser(intent, "Select a file"),
+//            REQUEST_CODE_FC
+//        )
+//    }
 
     private fun startBroadcastDiscoveryActivity(){
         val intent = Intent(this@EditItemActivity, BroadcastDiscoveryActivity::class.java)
@@ -215,7 +215,7 @@ class EditItemActivity : AppCompatActivity() {
         when (requestCode){
             REQUEST_CODE_BCD ->
                 if (resultCode == RESULT_OK) {
-                    val jsonData = JSONObject(data?.getStringExtra(BroadcastDiscoveryActivity.EXTRA_SERVER))
+                    val jsonData = JSONObject(data?.getStringExtra(BroadcastDiscoveryActivity.EXTRA_SERVER)!!)
                     edit_name.setText(jsonData.getString("Name"))
                     edit_type.setSelection(jsonData.getInt("Type"))
                     edit_server.setText(jsonData.getString("Address"))
@@ -229,13 +229,13 @@ class EditItemActivity : AppCompatActivity() {
                         Snackbar.LENGTH_LONG
                     ).show()
                 }
-            REQUEST_CODE_FC ->
-                if (resultCode == Activity.RESULT_OK) {
-                    certificateUri = data?.data
-                    certificateUri?.path?.let{
-                        edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
-                    }
-                }
+//            REQUEST_CODE_FC ->
+//                if (resultCode == Activity.RESULT_OK) {
+//                    certificateUri = data?.data
+//                    certificateUri?.path?.let{
+//                        edit_certificate_text.text = it.substring(it.lastIndexOf("/") + 1)
+//                    }
+//                }
             else -> Log.d(EDIT_TAG, "Unexpected activity returned some result!!!")
         }
     }

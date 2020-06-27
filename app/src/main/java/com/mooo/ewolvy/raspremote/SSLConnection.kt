@@ -99,7 +99,7 @@ object SSLConnection {
         return output.toString()
     }
 
-    fun connect(urlAddress: String, username: String, password: String, certificate: Uri, context: Context): String {
+    /*fun connect(urlAddress: String, username: String, password: String, certificate: Uri, context: Context): String {
         val urlConnection = setUpHttpsConnection(urlAddress, certificate, context) ?: return "ERROR"
         var jsonResponse = ""
 
@@ -124,7 +124,7 @@ object SSLConnection {
         }
         Log.d(TAG, "Response: $jsonResponse")
         return jsonResponse
-    }
+    }*/
 
     fun easyConnect(urlAddress: String, username: String, password: String): String {
         var jsonResponse = ""
